@@ -18,7 +18,7 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module',
   },
-  plugins: ['@typescript-eslint', 'react-refresh', 'prettier'],
+  plugins: ['@typescript-eslint', 'import', 'react-refresh', 'prettier'],
   rules: {
     'prettier/prettier': 'error',
     'react-refresh/only-export-components': [
@@ -28,5 +28,12 @@ module.exports = {
     '@typescript-eslint/ban-ts-comment': 'error',
     '@typescript-eslint/no-explicit-any': 'warn',
     'react/react-in-jsx-scope': 'off',
+    'import/order': [
+      'error',
+      {
+        groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index'],
+        'newlines-between': 'always',
+      },
+    ],
   },
 };

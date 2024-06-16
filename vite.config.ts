@@ -1,11 +1,11 @@
 import path from 'path';
+
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react-swc';
 import UnoCSS from 'unocss/vite';
 // @ts-expect-error 找不到类型
 import viteEslint from 'vite-plugin-eslint';
 import viteStylelint from 'vite-plugin-stylelint';
-import viteImagemin from 'vite-plugin-imagemin';
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons';
 import { chunkSplitPlugin } from 'vite-plugin-chunk-split';
 import legacy from '@vitejs/plugin-legacy';
@@ -19,11 +19,6 @@ export default defineConfig({
     viteEslint(),
     viteStylelint({
       exclude: ['node_modules'],
-    }),
-    viteImagemin({
-      optipng: { optimizationLevel: 7 },
-      pngquant: { quality: [0.8, 0.9] },
-      svgo: { plugins: [{ name: 'removeViewBox' }, { name: 'removeEmptyAttrs', active: false }] },
     }),
     createSvgIconsPlugin({
       iconDirs: [path.resolve(__dirname, 'src/assets/svg-icons')],

@@ -1,4 +1,5 @@
 import { createHashRouter, RouteObject, RouterProvider } from 'react-router-dom';
+
 import { getRoute } from './util';
 
 const routes: RouteObject[] = [
