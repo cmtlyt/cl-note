@@ -58,13 +58,14 @@ const navMap = [
 ];
 
 const Nav = styled.nav`
+  padding-block: 1em;
   background-color: #fff;
   box-shadow: 0 0 3.5rem -2.5rem var(--shadow-color);
 `;
 
 export function NavBar(_props: NavbarProps) {
   return (
-    <Nav un-p="y-1em">
+    <Nav>
       <Flex justify="space-evenly" un-h="$big-icon-size">
         {navMap.map((item) => (
           <NavItem key={item.to} {...item} />

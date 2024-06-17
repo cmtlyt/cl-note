@@ -28,7 +28,6 @@ export default defineConfig({
     chunkSplitPlugin({
       customSplitting: {
         'react-vendor': [/\/react(-dom)?\//],
-        'comp-library': [/src\/components/],
       },
     }),
     legacy({}),

@@ -8,7 +8,7 @@ const routes: RouteObject[] = [
   {
     Component: Layout,
     children: [
-      { loader: () => redirect('/list') },
+      { path: '/', loader: () => redirect('/list') },
       getRoute('/list', 'List'),
       getRoute('/edit', 'Edit'),
       getRoute('/user', 'User'),
