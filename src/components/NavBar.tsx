@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { gc } from '@cmtlyt/base';
 import styled from 'styled-components';
 
-import SvgIcon from './SvgIcon';
+import { SvgIcon } from './SvgIcon';
 
 interface NavbarProps {}
 

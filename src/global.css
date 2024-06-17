@@ -11,3 +11,11 @@ body {
   font-size: 16px;
   background-color: #eee;
 }
+
+a,
+button,
+input[type='button'],
+input[type='submit'] {
+  -tap-highlight-color: transparent;
+  -webkit-tap-highlight-color: transparent;
+}

@@ -6,7 +6,7 @@ interface SvgIconProps extends React.SVGAttributes<SVGElement> {
   height?: string | number;
 }
 
-export default function SvgIcon(props: SvgIconProps) {
+export function SvgIcon(props: SvgIconProps) {
   const { name, prefix = 'icon', color, ...rest } = props;
   const symbolId = `#${prefix}-${name}`;
 
