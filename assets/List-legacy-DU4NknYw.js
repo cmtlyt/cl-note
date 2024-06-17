@@ -1,0 +1,1 @@
+System.register(["./react-vendor-legacy-DTjg6swd.js","./__commonjsHelpers__-legacy-CTU2Tar8.js","./comp-library-legacy-By4ptGfK.js"],(function(e,t){"use strict";var n;return{setters:[function(e){n=e.j},null,null],execute:function(){e("default",(function(){return n.jsx("div",{children:"list"})}))}}}));

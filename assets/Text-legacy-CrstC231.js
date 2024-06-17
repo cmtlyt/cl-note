@@ -1,1 +1,0 @@
-System.register(["./react-vendor-legacy-CnEKlBrN.js","./__commonjsHelpers__-legacy-Dm4tvPOc.js"],(function(e,t){"use strict";var n;return{setters:[function(e){n=e.j},null],execute:function(){e("default",(function(){return n.jsx("div",{children:"text"})}))}}}));
