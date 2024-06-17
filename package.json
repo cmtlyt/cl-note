@@ -10,7 +10,7 @@
     "build": "vite build",
     "lint": "npm run lint:script && npm run lint:style",
     "lint:style": "stylelint --fix \"src/**/*.{css,scss}\"",
-    "lint:script": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0 --fix",
+    "lint:script": "eslint \"src/**/*.{tsx,jsx,ts,js}\" --report-unused-disable-directives --max-warnings 0 --fix",
     "preview": "vite preview",
     "patch": "patch-package"
   },
@@ -67,11 +67,11 @@
     "vite-plugin-svg-icons": "^2.0.1"
   },
   "lint-staged": {
-    "**/*.{js,jsx,tsx,ts}": [
+    "src/**/*.{js,jsx,tsx,ts}": [
       "npm run lint:script",
       "git add ."
     ],
-    "**/*.{scss}": [
+    "src/**/*.{scss,css}": [
       "npm run lint:style",
       "git add ."
     ]

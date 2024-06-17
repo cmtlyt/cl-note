@@ -11,9 +11,11 @@ import { chunkSplitPlugin } from 'vite-plugin-chunk-split';
 import legacy from '@vitejs/plugin-legacy';
 import { visualizer } from 'rollup-plugin-visualizer';
 
+import { injectGlobalVariabel } from './plugins/injectGlobalVariabel';
+
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/cl-note',
+  base: '/cl-note/',
   plugins: [
     react(),
     UnoCSS(),
@@ -32,6 +34,7 @@ export default defineConfig({
     }),
     legacy({}),
     visualizer({}),
+    injectGlobalVariabel({}),
   ],
   resolve: {
     alias: {

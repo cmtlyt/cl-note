@@ -1,0 +1,1 @@
+function initMock(){"serviceWorker"in navigator?navigator.serviceWorker.register(`${window.__globalVariabels__.baseUrl}mock-service-worker.js`,{scope:`${window.__globalVariabels__.baseUrl}`}).then((e=>{console.debug("SW registered scope:",e.scope)})).catch((e=>{console.debug("SW registration failed:",e)})):console.warn("当前浏览器不支持serviceWorker")}initMock();

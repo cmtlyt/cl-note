@@ -1,0 +1,1 @@
+importScripts("./mock-system.js");const{initMockSystem:initMockSystem,getMockData:getMockData}=mockSystem;self.addEventListener("activate",(t=>{t.waitUntil(initMockSystem())}));const API_REG=/^\/api\/(.*)/;self.addEventListener("fetch",(t=>{const e=new URL(t.request.url),[,s]=Array.from(API_REG.exec(e.pathname)||[]);s&&t.respondWith(getMockData(s,e,t.request))}));
