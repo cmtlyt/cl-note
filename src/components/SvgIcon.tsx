@@ -1,10 +1,9 @@
-interface SvgIconProps {
+interface SvgIconProps extends React.SVGAttributes<SVGElement> {
   name: string;
   prefix?: string;
   color?: string;
   width?: string | number;
   height?: string | number;
-  [key: string]: unknown;
 }
 
 export default function SvgIcon(props: SvgIconProps) {

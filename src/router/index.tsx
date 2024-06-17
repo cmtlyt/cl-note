@@ -1,11 +1,19 @@
-import { createHashRouter, RouteObject, RouterProvider } from 'react-router-dom';
+import { createHashRouter, RouteObject, RouterProvider, redirect } from 'react-router-dom';
 
 import { getRoute } from './util';
 
+import Layout from '@/layout';
+
 const routes: RouteObject[] = [
-  getRoute('/', 'Home', {
-    children: [getRoute('/about', 'About'), getRoute('/test', 'test/Text')],
-  }),
+  {
+    Component: Layout,
+    children: [
+      { loader: () => redirect('/list') },
+      getRoute('/list', 'List'),
+      getRoute('/edit', 'Edit'),
+      getRoute('/user', 'User'),
+    ],
+  },
 ];
 
 const router = createHashRouter(routes);

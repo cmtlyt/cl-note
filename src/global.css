@@ -1,7 +1,13 @@
 :root {
+  --primary-color: #f812a0;
+  --big-icon-size: 2.4rem;
+  --icon-active-color: #f812a0;
+  --shadow-color: var(--primary-color);
+
   font-size: 10px;
 }
 
 body {
   font-size: 16px;
+  background-color: #eee;
 }

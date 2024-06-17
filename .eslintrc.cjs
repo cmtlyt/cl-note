@@ -27,7 +27,9 @@ module.exports = {
     ],
     '@typescript-eslint/ban-ts-comment': 'error',
     '@typescript-eslint/no-explicit-any': 'warn',
+    '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
     'react/react-in-jsx-scope': 'off',
+    'react/no-unknown-property': ['error', { ignoreReg: /^un-*/ }],
     'import/order': [
       'error',
       {
