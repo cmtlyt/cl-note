@@ -1,5 +1,6 @@
 import { atomWithObservable } from 'jotai/utils';
 import { BehaviorSubject } from 'rxjs';
+import { produce } from 'immer';
 
 import { createImmerAtom } from './util';
 
@@ -22,7 +23,15 @@ const subject$ = new BehaviorSubject<UserInfo>({
 });
 
 export function updateUserInfo(data: Partial<UserInfo>) {
-  subject$.next({ ...subject$.getValue(), ...data });
+  const oldData = subject$.getValue();
+  subject$.next(
+    produce(oldData, (draft) => {
+      for (const key in draft) {
+        // @ts-expect-error is any
+        draft[key] = data[key];
+      }
+    }),
+  );
 }
 
 export const userInfoAtom = atomWithObservable(() => subject$);

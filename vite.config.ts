@@ -19,6 +19,7 @@ export default defineConfig({
   plugins: [
     react({
       jsxImportSource: 'jotai-signal',
+      tsDecorators: true,
     }),
     UnoCSS(),
     viteEslint(),

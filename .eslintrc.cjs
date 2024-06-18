@@ -12,8 +12,10 @@ module.exports = {
   ignorePatterns: ['dist', '.eslintrc.cjs'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
+    parser: '@babel/eslint-parser',
     ecmaFeatures: {
       jsx: true,
+      decorators: true,
     },
     ecmaVersion: 'latest',
     sourceType: 'module',

@@ -2,6 +2,8 @@ import { http } from './request';
 
 import { updateUserInfo } from '@/storage/user';
 import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from '@/constant';
+import { TransformReturn, transformType } from '@/decorators';
+import { UserEntity } from '@/entitys/user';
 
 function tokenHandler(res: { data: TokenResponse }) {
   const { data } = res;
@@ -52,19 +54,29 @@ export async function checkCaptcha(data: CheckCaptchaData) {
 }
 
 export async function getUserInfo() {
-  return http
-    .get<{
-      userInfo: {
-        age: number;
-        avatar: string;
-        email: string;
-        name: string;
-        phone: string;
-        sex: string;
-      };
-    }>('/getUserInfo')
-    .then((res) => {
-      updateUserInfo(res.data.userInfo);
+  return http.get<{
+    userInfo: {
+      age: number;
+      avatar: string;
+      email: string;
+      name: string;
+      phone: string;
+      sex: string;
+    };
+  }>('/getUserInfo');
+}
+
+class UserService {
+  @TransformReturn(UserEntity, 'data.userInfo')
+  private static _getUserInfo() {
+    return transformType<typeof getUserInfo, { data: { userInfo: UserEntity } }>(getUserInfo());
+  }
+  static async getUserInfo() {
+    return this._getUserInfo().then((res) => {
+      updateUserInfo(res.data.userInfo.toJson());
       return res;
     });
+  }
 }
+
+export const userService = new UserService();
