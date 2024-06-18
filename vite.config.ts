@@ -17,7 +17,9 @@ import { injectGlobalVariabel } from './plugins/injectGlobalVariabel';
 export default defineConfig({
   base: '/cl-note/',
   plugins: [
-    react(),
+    react({
+      jsxImportSource: 'jotai-signal',
+    }),
     UnoCSS(),
     viteEslint(),
     viteStylelint({

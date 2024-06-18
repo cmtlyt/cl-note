@@ -26,6 +26,18 @@ importers:
       fingerprintjs:
         specifier: ^0.5.3
         version: 0.5.3
+      immer:
+        specifier: ^10.1.1
+        version: 10.1.1
+      jotai:
+        specifier: ^2.8.3
+        version: 2.8.3(@types/react@18.3.3)(react@18.3.1)
+      jotai-immer:
+        specifier: ^0.4.0
+        version: 0.4.0(immer@10.1.1)(jotai@2.8.3(@types/react@18.3.3)(react@18.3.1))
+      jotai-signal:
+        specifier: ^0.9.0
+        version: 0.9.0(jotai@2.8.3(@types/react@18.3.3)(react@18.3.1))(react@18.3.1)
       mitt:
         specifier: ^3.0.1
         version: 3.0.1
@@ -2382,6 +2394,11 @@ packages:
       typescript:
         optional: true
 
+  create-react-signals@0.8.0:
+    resolution: {integrity: sha512-BMenSpH81lr/eRQp5ABPIfmBL1wqcIfM3iPnbPROtHn79KwtR9KVnQnFN/skTN/YLJPXJmXDM/R1CGhAWnEg1w==}
+    peerDependencies:
+      react: '>=18.0.0'
+
   cross-spawn@7.0.3:
     resolution: {integrity: sha512-iRDPJKUPVEND7dHPO8rkbOnPpyDygcDFtWjpeWNCgy8WP2rXcxXL8TskReQl6OrB2G7+UJrags1q15Fudc7G6w==}
     engines: {node: '>= 8'}
@@ -3103,6 +3120,9 @@ packages:
     engines: {node: '>=0.10.0'}
     hasBin: true
 
+  immer@10.1.1:
+    resolution: {integrity: sha512-s2MPrmjovJcoMaHtx6K11Ra7oD05NT97w1IC5zpMkT6Atjr7H8LjaDd81iIxUYpMKSRRNMJE703M1Fhr/TctHw==}
+
   immutable@4.3.6:
     resolution: {integrity: sha512-Ju0+lEMyzMVZarkTn/gqRpdqd5dOPaz1mCZ0SH3JV6iFw81PldE/PEB1hWVEA288HPt4WXW8O7AWxB10M+03QQ==}
 
@@ -3359,6 +3379,30 @@ packages:
   jiti@1.21.6:
     resolution: {integrity: sha512-2yTgeWTWzMWkHu6Jp9NKgePDaYHbntiwvYuuJLbbN9vl7DC9DvXKOB2BC3ZZ92D3cvV/aflH0osDfwpHepQ53w==}
     hasBin: true
+
+  jotai-immer@0.4.0:
+    resolution: {integrity: sha512-tE5kqHMG5II+rKY2BfTEjGLaRzjCgM+PxiKMLGnlbQ8RezSQUO30WOJ86TzqAfpNCcKJJAEhXJkriiuU0sTh+Q==}
+    peerDependencies:
+      immer: '>=9.0.0'
+      jotai: '>=2.0.0'
+
+  jotai-signal@0.9.0:
+    resolution: {integrity: sha512-2S2Z4pRrVwlnw4+xRZg393+aSB0aSMhgkw73WQbMm6rsqnCKYLNWauos0vMVOaSTQZ4Q3HTUY7TL/JgwMieuLA==}
+    peerDependencies:
+      jotai: '>=2.0.0'
+      react: '>=18.0.0'
+
+  jotai@2.8.3:
+    resolution: {integrity: sha512-pR4plVvdbzB6zyt7VLLHPMAkcRSKhRIvZKd+qkifQLa3CEziEo1uwZjePj4acTmQrboiISBlYSdCz3gWcr1Nkg==}
+    engines: {node: '>=12.20.0'}
+    peerDependencies:
+      '@types/react': '>=17.0.0'
+      react: '>=17.0.0'
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+      react:
+        optional: true
 
   js-base64@2.6.4:
     resolution: {integrity: sha512-pZe//GGmwJndub7ZghVHz7vjb2LgC1m8B07Au3eYqeqv9emhESByMXxaEgkUkEqJe87oBbSniGYoQNIBklc7IQ==}
@@ -7556,6 +7600,10 @@ snapshots:
     optionalDependencies:
       typescript: 5.4.5
 
+  create-react-signals@0.8.0(react@18.3.1):
+    dependencies:
+      react: 18.3.1
+
   cross-spawn@7.0.3:
     dependencies:
       path-key: 3.1.1
@@ -8402,6 +8450,8 @@ snapshots:
 
   image-size@0.5.5: {}
 
+  immer@10.1.1: {}
+
   immutable@4.3.6: {}
 
   import-fresh@3.3.0:
@@ -8623,6 +8673,22 @@ snapshots:
       set-function-name: 2.0.2
 
   jiti@1.21.6: {}
+
+  jotai-immer@0.4.0(immer@10.1.1)(jotai@2.8.3(@types/react@18.3.3)(react@18.3.1)):
+    dependencies:
+      immer: 10.1.1
+      jotai: 2.8.3(@types/react@18.3.3)(react@18.3.1)
+
+  jotai-signal@0.9.0(jotai@2.8.3(@types/react@18.3.3)(react@18.3.1))(react@18.3.1):
+    dependencies:
+      create-react-signals: 0.8.0(react@18.3.1)
+      jotai: 2.8.3(@types/react@18.3.3)(react@18.3.1)
+      react: 18.3.1
+
+  jotai@2.8.3(@types/react@18.3.3)(react@18.3.1):
+    optionalDependencies:
+      '@types/react': 18.3.3
+      react: 18.3.1
 
   js-base64@2.6.4: {}
 

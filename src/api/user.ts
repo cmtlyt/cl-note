@@ -1,5 +1,6 @@
 import { http } from './request';
 
+import { updateUserInfo } from '@/storage/user';
 import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from '@/constant';
 
 function tokenHandler(res: { data: TokenResponse }) {
@@ -21,7 +22,7 @@ interface LoginData {
 }
 
 export async function login(data: LoginData) {
-  return http.post('/api/login', data).then(tokenHandler);
+  return http.post('/login', data).then(tokenHandler);
 }
 
 interface RegisterData extends LoginData {
@@ -30,7 +31,7 @@ interface RegisterData extends LoginData {
 }
 
 export async function register(data: RegisterData) {
-  return http.post('/api/register', data).then(tokenHandler);
+  return http.post('/register', data).then(tokenHandler);
 }
 
 interface CaptchaData {
@@ -38,7 +39,7 @@ interface CaptchaData {
 }
 
 export async function captcha(data: CaptchaData) {
-  return http.get<{ data: { success: boolean; captchaId: string; captcha: string } }>('/api/captcha', { params: data });
+  return http.get<{ data: { success: boolean; captchaId: string; captcha: string } }>('/captcha', { params: data });
 }
 
 interface CheckCaptchaData {
@@ -47,18 +48,23 @@ interface CheckCaptchaData {
 }
 
 export async function checkCaptcha(data: CheckCaptchaData) {
-  return http.post<{ data: { success: boolean } }>('/api/checkCaptcha', data);
+  return http.post<{ data: { success: boolean } }>('/checkCaptcha', data);
 }
 
 export async function getUserInfo() {
-  return http.get<{
-    userInfo: {
-      age: number;
-      avatar: string;
-      email: string;
-      name: string;
-      phone: string;
-      sex: string;
-    };
-  }>('/api/getUserInfo');
+  return http
+    .get<{
+      userInfo: {
+        age: number;
+        avatar: string;
+        email: string;
+        name: string;
+        phone: string;
+        sex: string;
+      };
+    }>('/getUserInfo')
+    .then((res) => {
+      updateUserInfo(res.data.userInfo);
+      return res;
+    });
 }

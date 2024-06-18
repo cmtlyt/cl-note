@@ -4,4 +4,4 @@ export const ACCESS_TOKEN_KEY = '__accessToken';
 
 export const REFRESH_TOKEN_KEY = '__refreshToken';
 
-export const API_BASE_URL = '';
+export const API_BASE_URL = import.meta.env.CL_REQUEST_BASE_URL;
