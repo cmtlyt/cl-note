@@ -1,0 +1,1 @@
+System.register(["./index-legacy-DJuIY15G.js","./react-vendor-legacy-Kr8y3EVF.js","./__commonjsHelpers__-legacy-CTU2Tar8.js"],(function(e,n){"use strict";var t;return{setters:[function(e){t=e.j},null,null],execute:function(){e("default",(function(){return t("div",{children:"Edit"})}))}}}));
