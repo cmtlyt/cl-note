@@ -73,7 +73,7 @@ class UserService {
   }
   static async getUserInfo() {
     return this._getUserInfo().then((res) => {
-      updateUserInfo(res.data.userInfo.toJson());
+      updateUserInfo(res.data.userInfo.toObject());
       return res;
     });
   }

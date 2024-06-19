@@ -5,22 +5,28 @@ import styled from 'styled-components';
 
 import { SvgIcon } from './SvgIcon';
 
-interface NavbarProps {}
+interface NavbarProps {
+  onChange?: (value: string) => void;
+}
 
 interface NavItemProps extends React.HTMLAttributes<HTMLDivElement> {
   to: string;
   icon: string;
 }
 
-function NavItem(props: NavItemProps) {
-  const { to, icon, className = '', ...otherProps } = props;
+interface NavItemHandlerProps {
+  onClick?: React.HTMLAttributes<HTMLAnchorElement>['onClick'];
+}
+
+function NavItem(props: NavItemProps & NavItemHandlerProps) {
+  const { to, icon, className = '', onClick, ...otherProps } = props;
 
   const location = useLocation();
 
   const isActive = location.pathname === to;
 
   return (
-    <Link to={to} un-transition="colors" un-relative="~">
+    <Link to={to} un-transition="colors" un-relative="~" onClick={onClick}>
       <Box
         {...otherProps}
         un-absolute="~"
@@ -63,12 +69,14 @@ const Nav = styled.nav`
   box-shadow: 0 0 3.5rem -2.5rem var(--shadow-color);
 `;
 
-export function NavBar(_props: NavbarProps) {
+export function NavBar(props: NavbarProps) {
+  const { onChange } = props;
+
   return (
     <Nav>
       <Flex justify="space-evenly" un-h="$big-icon-size">
         {navMap.map((item) => (
-          <NavItem key={item.to} {...item} />
+          <NavItem key={item.to} {...item} onClick={() => onChange?.(item.to)} />
         ))}
       </Flex>
     </Nav>

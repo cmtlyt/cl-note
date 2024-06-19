@@ -7,8 +7,11 @@ interface IJson<V = any> {
 }
 
 export class BaseEntity {
-  static fromJson(json: IJson) {
-    return this.parse(new this() as BaseEntity, json);
+  static fromJson(json: string) {
+    return this.parse(new this() as BaseEntity, JSON.parse(json));
+  }
+  static fromObject(object: IJson) {
+    return this.parse(new this() as BaseEntity, object);
   }
   static parse<T extends BaseEntity>(instance: T, json: IJson) {
     const fieldKeyList = Object.keys(instance);
@@ -84,7 +87,7 @@ export class BaseEntity {
     return instance;
   }
 
-  toJson() {
+  toObject() {
     const fieldKeyList = Object.keys(this);
     const json: IJson = {};
     for (const fieldKey of fieldKeyList) {
@@ -92,5 +95,13 @@ export class BaseEntity {
       json[fieldKey] = fieldValue;
     }
     return json;
+  }
+
+  toJson() {
+    return this.toString();
+  }
+
+  toString() {
+    return JSON.stringify(this.toObject());
   }
 }
