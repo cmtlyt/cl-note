@@ -20,6 +20,7 @@
     "@cmtlyt/base": "^0.5.16",
     "ahooks": "^3.8.0",
     "axios": "^1.7.2",
+    "dayjs": "^1.11.11",
     "fingerprintjs": "^0.5.3",
     "immer": "^10.1.1",
     "jotai": "^2.8.3",

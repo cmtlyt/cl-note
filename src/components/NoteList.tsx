@@ -1,7 +1,6 @@
-import styled from 'styled-components';
-
 import { SvgIcon } from './SvgIcon';
 import { Tag } from './Tag';
+import { Card } from './Card';
 
 interface NoteInfo {
   title: string;
@@ -19,23 +18,14 @@ interface NoteItemHandlerProps {
   onClick?: (id: string) => void;
 }
 
-const NoteItemWrapper = styled.div`
-  box-shadow: 0.2rem 0.2rem 1rem -0.8rem var(--shadow-color);
-`;
+const NoteItemWrapper = Card;
 
 export function NoteItem(props: NoteItemProps & NoteItemHandlerProps) {
   const { note, onClick, ...otherProps } = props;
 
   return (
-    <NoteItemWrapper
-      un-flex="~ col"
-      un-bg="white"
-      un-p="[1rem]"
-      un-rounded="[1rem]"
-      onClick={() => onClick?.(note.id)}
-      {...otherProps}
-    >
-      <div un-flex="~ items-center" un-w="full" un-overflow="hidden">
+    <NoteItemWrapper un-flex="~ col" un-p="[1rem]" onClick={() => onClick?.(note.id)} {...otherProps}>
+      <div un-flex="~ items-center" un-w="full">
         {note.icon && <SvgIcon name={note.icon} un-size="$big-icon-size" un-flex-shrink="0" un-m="r-[0.5em]" />}
         <div un-flex="1" un-line-clamp="1" un-m="r-[0.5em]" un-text="[2rem]" un-line-height="none">
           {note.title}
@@ -57,7 +47,9 @@ interface NoteListProps extends React.HTMLAttributes<HTMLDivElement> {
   notes: NoteInfo[];
 }
 
-export function NoteList(props: NoteListProps & NoteItemHandlerProps) {
+interface NoteListHandlerProps extends NoteItemHandlerProps {}
+
+export function NoteList(props: NoteListProps & NoteListHandlerProps) {
   const { notes, onClick, ...otherProps } = props;
   return (
     <div un-w="full" un-flex="~ col" un-p="x-[1rem]" {...otherProps}>

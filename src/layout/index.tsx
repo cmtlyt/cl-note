@@ -14,7 +14,7 @@ export default function Home() {
   return (
     <>
       <Flex direction="column">
-        <Box flex="1">
+        <Box un-flex="1" un-overflow="y-auto" un-p="b-[2rem]">
           <Outlet />
         </Box>
         <NavBar onChange={(e) => console.log(e)} />

@@ -31,3 +31,10 @@ export function setValueByKey(target: any, value: unknown, key?: string) {
   cur[keys[keys.length - 1]] = value;
   return target;
 }
+
+export function formatAmount(input: number, decimal = 2) {
+  const amountStr = String(input.toFixed(decimal));
+  const [integer, decimalStr] = amountStr.split('.');
+  const integerPart = integer.replace(/(\d)(?=(?:\d{3})+$)/g, '$1,');
+  return /^0*$/.test(decimalStr) ? integerPart : `${integerPart}.${decimalStr}`;
+}
