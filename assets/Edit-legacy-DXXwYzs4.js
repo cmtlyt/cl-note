@@ -1,1 +1,0 @@
-System.register(["./index-legacy-BgK5yDK2.js","./react-vendor-legacy-Db5zqUx1.js","./__commonjsHelpers__-legacy-CTU2Tar8.js"],(function(e,n){"use strict";var t;return{setters:[function(e){t=e.j},null,null],execute:function(){e("default",(function(){return t("div",{children:"Edit"})}))}}}));
