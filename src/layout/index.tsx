@@ -1,5 +1,5 @@
 import { Box, Flex as CkFlex } from '@chakra-ui/react';
-import { Outlet, useLocation } from 'react-router-dom';
+import { Outlet, useLocation, useNavigation } from 'react-router-dom';
 import styled from 'styled-components';
 import { useAtom, useSetAtom } from 'jotai';
 import { useEffect } from 'react';
@@ -7,6 +7,7 @@ import { useEffect } from 'react';
 import { NavBar } from '@/components/NavBar';
 import { getSlots } from '@/utils';
 import { layoutAtom, slotsInfoAtom } from '@/storage/layout';
+import { Loading } from '@/components/Loading';
 
 const Flex = styled(CkFlex)`
   height: 100%;
@@ -18,6 +19,7 @@ export default function Layout() {
   const [slotsInfo, setSlotsInfo] = useAtom(slotsInfoAtom);
   const [layoutInfo] = useAtom(layoutAtom);
   const location = useLocation();
+  const navigation = useNavigation();
 
   const { slots, path } = slotsInfo;
 
@@ -28,11 +30,16 @@ export default function Layout() {
   return (
     <>
       <Flex direction="column">
-        {slots.header}
-        <Box un-flex="1" un-overflow="y-auto" un-p="b-[2rem]">
-          <Outlet />
-        </Box>
-        {slots.footer || (layoutInfo.showNavBar && <NavBar onChange={(e) => console.log(e)} />)}
+        <div un-relative="~" un-z="0" un-p="b-[2rem]" un-flex="~ col 1" un-overflow="hidden">
+          {slots.header}
+          <Box un-overflow="y-auto" un-flex="1">
+            <Outlet />
+          </Box>
+          <Loading delay={300} visible={navigation.state === 'loading'} un-absolute="~" />
+        </div>
+        <div un-relative="~">
+          {slots.footer || (layoutInfo.showNavBar && <NavBar onChange={(e) => console.log(e)} />)}
+        </div>
       </Flex>
     </>
   );

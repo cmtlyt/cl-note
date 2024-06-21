@@ -32,8 +32,7 @@ export default defineConfig({
     }),
     chunkSplitPlugin({
       customSplitting: {
-        'react-vendor': [/\/react(-dom)?\//],
-        'antd-vendor': [/\/antd\//],
+        'react-vendor': [/\/react(-router)?(-dom)?\//],
       },
     }),
     legacy({}),

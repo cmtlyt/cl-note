@@ -24,6 +24,29 @@ const custonPresets: Preset[] = [
           'pointer-events': 'none',
         },
       ],
+      [
+        'center',
+        {
+          display: 'flex',
+          'align-items': 'center',
+          'justify-content': 'center',
+        },
+      ],
+      [
+        /^inset-(.*?)$/,
+        ([, value], { symbols }) => [
+          {
+            [symbols.parent]: '@supports(inset:0)',
+            inset: String(value),
+          },
+          {
+            top: String(value),
+            bottom: String(value),
+            left: String(value),
+            right: String(value),
+          },
+        ],
+      ],
     ],
   },
 ];
