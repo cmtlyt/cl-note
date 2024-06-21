@@ -33,6 +33,7 @@ export default defineConfig({
     chunkSplitPlugin({
       customSplitting: {
         'react-vendor': [/\/react(-dom)?\//],
+        'antd-vendor': [/\/antd\//],
       },
     }),
     legacy({}),
@@ -48,7 +49,7 @@ export default defineConfig({
     },
   },
   optimizeDeps: {
-    include: ['react', 'react-dom'],
+    include: ['react', 'react-dom', 'antd'],
   },
   envPrefix: 'CL_',
   css: {

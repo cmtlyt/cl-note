@@ -38,3 +38,20 @@ export function formatAmount(input: number, decimal = 2) {
   const integerPart = integer.replace(/(\d)(?=(?:\d{3})+$)/g, '$1,');
   return /^0*$/.test(decimalStr) ? integerPart : `${integerPart}.${decimalStr}`;
 }
+
+interface ChildrenInfo {
+  props: React.HTMLAttributes<HTMLElement>;
+}
+
+export function getSlots(input?: React.ReactNode | ChildrenInfo | ChildrenInfo[]): Record<string, React.ReactNode> {
+  if (!Array.isArray(input)) return { [(input as any)?.props?.slot || 'default']: input as React.ReactNode };
+  return input.reduce(
+    (acc, cur) => {
+      const key = cur.props.slot || 'default';
+      acc[key] ??= [];
+      acc[key].push(cur as React.ReactNode);
+      return acc;
+    },
+    {} as Record<string, React.ReactNode[]>,
+  );
+}

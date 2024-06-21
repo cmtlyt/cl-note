@@ -35,13 +35,15 @@ export function createImmerAtom<
   return atom(
     (get) => get(immerAtom)[key],
     (get, set, value: V) => {
-      set(
-        immerAtom,
-        produce(get(immerAtom), (draft: any) => {
-          draft[key] = value;
-        }),
-      );
-      onChange?.(get, set, value);
+      (async () => {
+        set(
+          immerAtom,
+          produce(await get(immerAtom), (draft: any) => {
+            draft[key] = value;
+          }),
+        );
+        onChange?.(get, set, value);
+      })();
     },
   );
 }
