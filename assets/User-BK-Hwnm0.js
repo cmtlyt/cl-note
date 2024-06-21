@@ -1,1 +1,0 @@
-import{j as r}from"./index-ExH608Ru.js";import"./react-vendor-D_hU0cu3.js";import"./__commonjsHelpers__-Cpj98o6Y.js";import"./antd-vendor-CpbNfzqh.js";function m(){return r("div",{children:"User"})}export{m as default};
