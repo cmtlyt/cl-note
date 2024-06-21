@@ -38,7 +38,7 @@ const OptionWrapper = styled(Card)<{ $count: number }>`
 `;
 
 export function Select(props: SelectProps & SelectHandlerProps) {
-  const { placeholder, options: _tempOptions, onChange, ...otherProps } = props;
+  const { placeholder, options: _tempOptions, children, onChange, ...otherProps } = props;
 
   const options = useMemo(() => {
     return [...(placeholder ? [placeholder] : []), ...(_tempOptions || [])];
@@ -60,7 +60,10 @@ export function Select(props: SelectProps & SelectHandlerProps) {
   return (
     <div un-relative="~" className="group">
       <label>
-        <div {...otherProps}>{curOpt.label}</div>
+        <div {...otherProps}>
+          <span>{curOpt.label}</span>
+          {children}
+        </div>
         <input type="input" un-hidden-with-position="~" readOnly />
       </label>
       <OptionWrapper
@@ -69,11 +72,12 @@ export function Select(props: SelectProps & SelectHandlerProps) {
         un-top="full"
         un-grid="~  rows-[repeat(var(--count),0fr)]"
         un-overflow="hidden"
-        un-transition="all duration-200"
-        un-group-focus-within="rows-[repeat(var(--count),1fr)] [&>*]:p-y-[0.5em]"
-        un-w="max-content"
+        un-transition="duration-200 property-[grid-template-rows]"
+        un-color="transparent"
+        un-group-focus-within="color-inherit rows-[repeat(var(--count),1fr)] [&>*]:p-y-[0.5em]"
+        un-w="max"
         un-backdrop-blur="[0.5rem]"
-        un-m="t-[1rem]"
+        un-z="1"
       >
         {options.map((option) => {
           return (

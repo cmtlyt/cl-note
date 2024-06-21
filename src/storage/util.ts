@@ -15,13 +15,14 @@ export function createAtomFromImmer<
   T extends WritableAtom<any, any, any>,
   K extends keyof AtomValue<T>,
   V extends AtomValue<T>[K],
->(immerAtom: T, key: K): WritableAtom<V, [value: V], void> {
+>(immerAtom: T, key: K, onChange?: WritableAtom<V, [value: V], void>['write']): WritableAtom<V, [value: V], void> {
   return atom(
     (get) => get(immerAtom)[key],
-    (_, set, value: V) => {
+    (get, set, value: V) => {
       set(immerAtom, (draft: any) => {
         draft[key] = value;
       });
+      onChange?.(get, set, value);
     },
   );
 }
@@ -30,7 +31,7 @@ export function createImmerAtom<
   T extends WritableAtom<any, any, any>,
   K extends keyof AtomValue<T>,
   V extends AtomValue<T>[K],
->(immerAtom: T, key: K): WritableAtom<V, [value: V], void> {
+>(immerAtom: T, key: K, onChange?: WritableAtom<V, [value: V], void>['write']): WritableAtom<V, [value: V], void> {
   return atom(
     (get) => get(immerAtom)[key],
     (get, set, value: V) => {
@@ -40,6 +41,7 @@ export function createImmerAtom<
           draft[key] = value;
         }),
       );
+      onChange?.(get, set, value);
     },
   );
 }
