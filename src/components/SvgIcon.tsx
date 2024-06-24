@@ -9,7 +9,7 @@ interface SvgIconProps extends React.SVGAttributes<SVGElement> {
 
 export function SvgIcon(props: SvgIconProps) {
   const { name, prefix = 'icon', color, ...rest } = props;
-  const symbolId = `#${prefix}-${name}`;
+  const symbolId = `#${prefix}-${name.replace(/\//g, '-')}`;
 
   return (
     <svg

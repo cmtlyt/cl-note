@@ -30,18 +30,21 @@ function TextWrapper(props: TextWrapperProps) {
       un-flex="~ justify-center"
       un-word-break="break-all"
       un-color={isActive ? '$primary-active-color' : '$detail-text-color'}
+      un-m="t-[0.4em]"
+      un-transition="colors"
       {...otherProps}
     />
   );
 }
 
 const IconWrapper = styled(Card)<{ $isActive?: boolean }>`
+  border-radius: 9999px;
   ${(props) => {
     if (props.$isActive) {
       return css`
-        box-shadow:
-          inset 0.2rem 0.2rem 1rem -0.9rem var(--shadow-color),
-          inset -0.2rem -0.2rem 1rem -0.9rem #0004;
+        background-color: var(--primary-active-color);
+        color: white;
+        box-shadow: null;
       `;
     }
     return '';
@@ -58,12 +61,17 @@ export function CircleIcon(props: CircleIconProps) {
   }, [icon]);
 
   return (
-    <div un-flex="~ col items-center" un-w="[calc(var(--big-icon-size)+1em)]" un-text="center" onClick={onClick}>
-      <IconWrapper $isActive={isActive} un-size="$big-icon-size" un-box="content" un-p="[0.5em]" un-overflow="hidden">
+    <div
+      un-flex="~ col items-center"
+      un-w="[calc(var(--content-big-icon-size)+1em)]"
+      un-text="center"
+      onClick={onClick}
+    >
+      <IconWrapper $isActive={isActive} un-transition="colors" un-p="[0.5em]" un-overflow="hidden">
         <Fullback>
           <Case slot="fullback" when={_isUrl ? 'img' : 'icon'}>
-            <img slot="img" src={icon} un-size="$big-icon-size" {...otherProps} />
-            <SvgIcon slot="icon" name={icon!} un-size="$big-icon-size" {...(otherProps as BaseUnoProps)} />
+            <img slot="img" src={icon} un-size="$content-big-icon-size" {...otherProps} />
+            <SvgIcon slot="icon" name={icon!} un-size="$content-big-icon-size" {...(otherProps as BaseUnoProps)} />
           </Case>
           {slots.icon || slots.default}
         </Fullback>

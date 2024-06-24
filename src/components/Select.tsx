@@ -2,11 +2,17 @@ import { useCallback, useMemo, useState } from 'react';
 import styled, { css } from 'styled-components';
 
 import { Card } from './Card';
+import { Fullback } from './Fullback';
 
-interface OptionProps extends BaseCompProps<HTMLDivElement> {
+import { useSlots } from '@/hooks/useSlots';
+
+export interface OptionInfo {
   label: string;
   value: string;
+  onClick?: () => void;
 }
+
+interface OptionProps extends OptionInfo, Omit<BaseCompProps<HTMLDivElement>, 'onClick'> {}
 
 interface OptionHandlerProps {
   onClick?: (value: string) => void;
@@ -21,9 +27,14 @@ function Option(props: OptionProps & OptionHandlerProps) {
   );
 }
 
-interface SelectProps extends BaseCompProps<HTMLDivElement> {
+interface SelectProps extends Omit<BaseCompProps<HTMLDivElement>, 'children'> {
+  name?: string;
   placeholder?: OptionProps;
   options?: OptionProps[];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  OptionComp?: React.FC<any>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  children?: ReactNode | React.FC<any>;
 }
 
 interface SelectHandlerProps {
@@ -38,16 +49,20 @@ const OptionWrapper = styled(Card)<{ $count: number }>`
 `;
 
 export function Select(props: SelectProps & SelectHandlerProps) {
-  const { placeholder, options: _tempOptions, children, onChange, ...otherProps } = props;
+  const { name, placeholder, options: _tempOptions, children, OptionComp, onChange, ...otherProps } = props;
+
+  const slots = useSlots(children as ReactNode, ['icon']);
 
   const options = useMemo(() => {
     return [...(placeholder ? [placeholder] : []), ...(_tempOptions || [])];
   }, [_tempOptions, placeholder]);
 
-  const [curOpt, setCurOpt] = useState({
-    value: options?.[0].value || '',
-    label: options?.[0].label || '',
-  });
+  const [curOpt, setCurOpt] = useState(
+    options[0] || {
+      value: '',
+      label: '',
+    },
+  );
 
   const changeOpt = useCallback(
     (option: OptionProps) => {
@@ -60,11 +75,15 @@ export function Select(props: SelectProps & SelectHandlerProps) {
   return (
     <div un-relative="~" className="group">
       <label>
-        <div {...otherProps}>
-          <span>{curOpt.label}</span>
-          {children}
-        </div>
-        <input type="input" un-hidden-with-position="~" readOnly />
+        <Fullback>
+          {/* @ts-expect-error is FC */}
+          {slots.default && slots.default(curOpt)}
+          <div {...otherProps} slot="fullback">
+            <span>{curOpt.label}</span>
+            {slots.icon}
+          </div>
+        </Fullback>
+        <input type="input" un-hidden-with-position="~" readOnly name={name} value={curOpt.value} />
       </label>
       <OptionWrapper
         $count={options.length}
@@ -72,23 +91,20 @@ export function Select(props: SelectProps & SelectHandlerProps) {
         un-top="full"
         un-grid="~  rows-[repeat(var(--count),0fr)]"
         un-overflow="hidden"
-        un-transition="duration-200 property-[grid-template-rows]"
+        un-transition="duration-200 property-[grid-template-rows] [&>*]:all [&>*]:duration-200"
         un-color="transparent"
         un-group-focus-within="color-inherit rows-[repeat(var(--count),1fr)] [&>*]:p-y-[0.5em]"
         un-w="max"
         un-backdrop-blur="[0.5rem]"
         un-z="1"
+        un-min-h="[&>*]:0"
       >
         {options.map((option) => {
           return (
-            <Option
-              key={option.value}
-              {...option}
-              un-min-h="0"
-              un-p="x-[1em]"
-              un-transition="all duration-200"
-              onClick={() => changeOpt(option)}
-            />
+            <Fullback key={option.value}>
+              {OptionComp && <OptionComp {...option} onClick={() => changeOpt(option)} />}
+              <Option slot="fullback" key={option.value} {...option} un-p="x-[1em]" onClick={() => changeOpt(option)} />
+            </Fullback>
           );
         })}
       </OptionWrapper>

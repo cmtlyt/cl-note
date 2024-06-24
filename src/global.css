@@ -1,6 +1,7 @@
 :root {
   --primary-color: #f812a0;
   --big-icon-size: 2.4rem;
+  --content-big-icon-size: 3.6rem;
   --icon-active-color: #f812a0;
   --shadow-color: var(--primary-color);
   --detail-color: #999;

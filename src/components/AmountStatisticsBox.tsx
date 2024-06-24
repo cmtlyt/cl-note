@@ -64,7 +64,7 @@ function Filter() {
           ]}
           onChange={(value) => changeMonth(Number(value))}
         >
-          <SvgIcon name="arrow-bottom" un-size="[1.2rem]" un-color="$detail-text-color" />
+          <SvgIcon slot="icon" name="arrow-bottom" un-size="[1.2rem]" un-color="$detail-text-color" />
         </Select>
       </StatNumber>
     </Stat>
