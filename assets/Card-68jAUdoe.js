@@ -1,1 +1,0 @@
-var o=Object.freeze,m=Object.defineProperty;var a=(r,e)=>o(m(r,"raw",{value:o(e||r.slice())}));import{aa as s}from"./index-CKnKo8Vf.js";var d;const t=s.div(d||(d=a(["\n  background-color: #fff;\n  border-radius: 1rem;\n  box-shadow: 0.2rem 0.2rem 1rem -0.8rem var(--shadow-color);\n"])));export{t as C};
