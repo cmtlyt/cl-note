@@ -13,7 +13,7 @@ const StatisticsWrapper = styled.div`
   box-shadow: 0.2rem 0.2rem 1rem -0.8rem var(--shadow-color);
 `;
 
-function Label(props: React.HTMLAttributes<HTMLDivElement>) {
+function Label(props: BaseCompProps<HTMLDivElement>) {
   const { children, ...otherProps } = props;
 
   return (

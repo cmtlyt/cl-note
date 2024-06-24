@@ -27,3 +27,13 @@ type UnwrapAxiosResponse<F, T = ReturnType<F>> =
 type PatchReturnType<T, P, R = ReturnType<T>, N = HasPromise<[R, P]>> = UsePromiseWrapper<N, DeepMerge<R, P>>;
 
 type PatchResponseType<T, P, R = UnwrapAxiosResponse<T>> = PatchReturnType<T, P, R, true>;
+
+interface BaseCompProps<T = HTMLElement> extends React.HTMLAttributes<T> {}
+
+interface BaseUnoProps extends HTMLAttributes {
+  children?: ReactNode;
+}
+
+type ReactNode = React.ReactNode;
+
+type FCProps<C extends React.FC<any>> = C extends React.FC<infer P> ? P : Record<string, any>;

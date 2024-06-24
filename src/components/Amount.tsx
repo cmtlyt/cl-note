@@ -1,6 +1,6 @@
 import { formatAmount } from '@/utils';
 
-interface AmountProps extends React.HTMLAttributes<HTMLDivElement> {
+interface AmountProps extends BaseCompProps<HTMLDivElement> {
   amount: number;
   showSign?: boolean;
   decimal?: number;

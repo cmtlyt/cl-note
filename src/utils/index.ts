@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { getArray } from '@cmtlyt/base';
+
 export function getValueByKey(obj: any, key?: string, prefix = '') {
   if (!key) return obj;
   const keys = key.split('.');
@@ -39,19 +41,37 @@ export function formatAmount(input: number, decimal = 2) {
   return /^0*$/.test(decimalStr) ? integerPart : `${integerPart}.${decimalStr}`;
 }
 
-interface ChildrenInfo {
-  props: React.HTMLAttributes<HTMLElement>;
-}
-
-export function getSlots(input?: React.ReactNode | ChildrenInfo | ChildrenInfo[]): Record<string, React.ReactNode> {
-  if (!Array.isArray(input)) return { [(input as any)?.props?.slot || 'default']: input as React.ReactNode };
+export function getSlots(
+  input?: ReactNode | React.ReactElement | React.ReactElement[],
+  keys: string[] = [],
+): Record<string, ReactNode> {
+  if (!Array.isArray(input)) return { [(input as any)?.props?.slot || 'default']: input as ReactNode };
   return input.reduce(
     (acc, cur) => {
-      const key = cur.props.slot || 'default';
+      if (!cur) return acc;
+      let key = cur.props?.slot || 'default';
+      if (keys?.length && !keys.includes(key)) key = 'default';
       acc[key] ??= [];
-      acc[key].push(cur as React.ReactNode);
+      acc[key].push(cur as ReactNode);
       return acc;
     },
-    {} as Record<string, React.ReactNode[]>,
+    {} as Record<string, ReactNode[]>,
   );
+}
+
+export function selectComp(
+  input?: ReactNode | React.ReactElement | React.ReactElement[],
+  contition?: unknown | ((info: unknown) => boolean),
+  key?: string,
+): ReactNode {
+  if (!input || !contition) return null;
+  const inputList = getArray(input);
+
+  return (inputList.find((item) => {
+    const value = getValueByKey(item, key);
+    if (typeof contition === 'function') {
+      return contition(value);
+    }
+    return value === contition;
+  }) || null) as ReactNode;
 }

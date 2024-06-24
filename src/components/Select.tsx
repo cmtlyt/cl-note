@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 
 import { Card } from './Card';
 
-interface OptionProps extends React.HTMLAttributes<HTMLDivElement> {
+interface OptionProps extends BaseCompProps<HTMLDivElement> {
   label: string;
   value: string;
 }
@@ -21,7 +21,7 @@ function Option(props: OptionProps & OptionHandlerProps) {
   );
 }
 
-interface SelectProps extends React.HTMLAttributes<HTMLDivElement> {
+interface SelectProps extends BaseCompProps<HTMLDivElement> {
   placeholder?: OptionProps;
   options?: OptionProps[];
 }

@@ -13,5 +13,6 @@ type GlobalVariabels = {
 declare namespace globalThis {
   interface Window {
     __globalVariabels__: GlobalVariabels;
+    __ClConfig__: Record<string, unknown>;
   }
 }

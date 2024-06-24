@@ -12,6 +12,8 @@ import './global.css';
 locale('zh-cn');
 extend(isoWeek);
 
+window.__ClConfig__.disableWarning = true;
+
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <App />

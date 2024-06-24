@@ -15,7 +15,7 @@ interface AmountInfo {
   date: string;
 }
 
-interface AmountItemProps extends React.HTMLAttributes<HTMLDivElement> {
+interface AmountItemProps extends BaseCompProps<HTMLDivElement> {
   amountInfo: AmountInfo;
 }
 
@@ -73,7 +73,7 @@ function DateTitle(props: DateTitleProps) {
   );
 }
 
-interface AmountListProps extends React.HTMLAttributes<HTMLDivElement> {
+interface AmountListProps extends BaseCompProps<HTMLDivElement> {
   amounts: AmountInfo[];
 }
 

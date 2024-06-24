@@ -1,15 +1,15 @@
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { SvgIcon } from './SvgIcon';
 import { Card } from './Card';
 
-import { getSlots } from '@/utils';
 import { useWrapper } from '@/hooks/useWrapper';
 import { Delivery } from '@/layout';
+import { useSlots } from '@/hooks/useSlots';
 
-interface PageTitleProps extends React.HTMLAttributes<HTMLDivElement> {
+interface PageTitleProps extends BaseCompProps<HTMLDivElement> {
   title?: string;
   hasBack?: boolean;
   hasFixed?: boolean;
@@ -20,10 +20,10 @@ const TitleWrapper = styled(Card)`
   border-radius: 0;
 `;
 
-export function PageTitle(props: PageTitleProps): React.ReactNode {
+export function PageTitle(props: PageTitleProps): ReactNode {
   const { title, hasBack, hasFixed = false, children, onBack, ...otherProps } = props;
 
-  const slots = getSlots(children);
+  const slots = useSlots(children);
   const navigate = useNavigate();
 
   const onBackClick = useCallback(() => {

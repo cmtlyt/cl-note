@@ -1,7 +1,7 @@
 import { gc } from '@cmtlyt/base';
 import styled from 'styled-components';
 
-interface LoadingProps extends React.HTMLAttributes<HTMLDivElement> {
+interface LoadingProps extends BaseCompProps<HTMLDivElement> {
   visible: boolean;
   delay?: number;
 }

@@ -9,13 +9,13 @@ interface NavbarProps {
   onChange?: (value: string) => void;
 }
 
-interface NavItemProps extends React.HTMLAttributes<HTMLDivElement> {
+interface NavItemProps extends BaseCompProps<HTMLDivElement> {
   to: string;
   icon: string;
 }
 
 interface NavItemHandlerProps {
-  onClick?: React.HTMLAttributes<HTMLAnchorElement>['onClick'];
+  onClick?: BaseCompProps<HTMLAnchorElement>['onClick'];
 }
 
 function NavItem(props: NavItemProps & NavItemHandlerProps) {

@@ -5,9 +5,9 @@ import { useAtom, useSetAtom } from 'jotai';
 import { useEffect } from 'react';
 
 import { NavBar } from '@/components/NavBar';
-import { getSlots } from '@/utils';
 import { layoutAtom, slotsInfoAtom } from '@/storage/layout';
 import { Loading } from '@/components/Loading';
+import { useSlots } from '@/hooks/useSlots';
 
 const Flex = styled(CkFlex)`
   height: 100%;
@@ -46,7 +46,7 @@ export default function Layout() {
 }
 
 interface DeliveryProps {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 export function Delivery(props: DeliveryProps) {
@@ -55,7 +55,7 @@ export function Delivery(props: DeliveryProps) {
   const setSlotsInfo = useSetAtom(slotsInfoAtom);
   const location = useLocation();
 
-  const slots = getSlots(children);
+  const slots = useSlots(children);
 
   useEffect(() => {
     setSlotsInfo({ path: location.pathname, slots });

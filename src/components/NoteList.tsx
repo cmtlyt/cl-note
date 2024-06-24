@@ -10,7 +10,7 @@ interface NoteInfo {
   icon?: string;
 }
 
-interface NoteItemProps extends React.HTMLAttributes<HTMLDivElement> {
+interface NoteItemProps extends BaseCompProps<HTMLDivElement> {
   note: NoteInfo;
 }
 
@@ -43,7 +43,7 @@ export function NoteItem(props: NoteItemProps & NoteItemHandlerProps) {
   );
 }
 
-interface NoteListProps extends React.HTMLAttributes<HTMLDivElement> {
+interface NoteListProps extends BaseCompProps<HTMLDivElement> {
   notes: NoteInfo[];
 }
 

@@ -2,6 +2,7 @@ import { DatePicker } from 'antd';
 import { ActionFunctionArgs, Form } from 'react-router-dom';
 
 import { PageTitle } from '@/components/PageTitle';
+import { CircleIcon } from '@/components/CircleIcon';
 
 export default function Edit() {
   return (
@@ -10,6 +11,10 @@ export default function Edit() {
       <Form method="post">
         <DatePicker name="date" className="w-full"></DatePicker>
         <input type="submit" value="提交" />
+        <CircleIcon icon="react" text="react" isActive={true}>
+          <div slot="text">slot text</div>
+        </CircleIcon>
+        <CircleIcon icon="user" text="user" />
       </Form>
     </>
   );

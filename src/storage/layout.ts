@@ -7,7 +7,7 @@ import { createImmerAtom } from './util';
 interface LayoutStorage {
   showLoading: boolean;
   showNavBar: boolean;
-  slotsInfo: { path: string; slots: Record<string, React.ReactNode> };
+  slotsInfo: { path: string; slots: Record<string, ReactNode> };
 }
 
 const subject$ = new BehaviorSubject<LayoutStorage>({

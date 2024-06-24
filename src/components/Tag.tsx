@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-interface TagProps extends React.HTMLAttributes<HTMLDivElement> {}
+interface TagProps extends BaseCompProps<HTMLDivElement> {}
 
 const TagWrapper = styled.div`
   box-shadow: 0 0 0 0.1rem #e5e5e5;

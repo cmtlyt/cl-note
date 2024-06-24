@@ -4,6 +4,7 @@ interface SvgIconProps extends React.SVGAttributes<SVGElement> {
   color?: string;
   width?: string | number;
   height?: string | number;
+  slot?: unknown;
 }
 
 export function SvgIcon(props: SvgIconProps) {
