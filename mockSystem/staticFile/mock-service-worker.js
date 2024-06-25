@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 importScripts('./mock-system.js');
 
 const { initMockSystem, getMockData } = mockSystem;

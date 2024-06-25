@@ -1,9 +1,26 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { formatDto } from './schema';
+import { BillData } from './types/handler';
 import { getTokens, randomString, verifyToken } from './utils';
 import { checkAuthentication } from './utils/middleware';
 import { storage } from './utils/storage';
 
-export const mockHandler = {
+export interface Context<D = any, Q = any> {
+  uri: URL;
+  request: Request;
+  data: D;
+  query: Q;
+  headers: Record<string, any>;
+  $__call: (controller: string, ctx: Context) => Promise<any>;
+}
+
+export type HandlerFunc = (ctx: Context) => Promise<any>;
+
+interface MockHandler {
+  [key: string]: Record<string, HandlerFunc>;
+}
+
+export const mockHandler: MockHandler = {
   post: {
     async register({ data }) {
       const [user] = await storage.find('user', {
@@ -15,7 +32,7 @@ export const mockHandler = {
       try {
         const user = await storage.insert('user', data);
         return { success: true, ...(await getTokens({ id: user.id, permission: user.permission })) };
-      } catch (e) {
+      } catch (e: any) {
         return { __format: true, status: 500, data: { message: e.message } };
       }
     },
@@ -41,6 +58,10 @@ export const mockHandler = {
       await storage.remove('session', sessionInfo);
       return { success: true };
     },
+    createBill: checkAuthentication<BillData>(async ({ data, tokenData }) => {
+      const bill = await storage.insert('bill', { ...data, date: new Date(data.date), userId: tokenData.id });
+      return { success: true, billId: bill.id };
+    }),
   },
   get: {
     async captcha({ query }) {
