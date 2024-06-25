@@ -3,7 +3,8 @@ import { useWrapper } from '@/hooks/useWrapper';
 
 interface FullbackProps {
   children: ReactNode;
-  wrapper?: React.FC;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  wrapper?: React.FC<any>;
   wrapperProps?: Record<string, unknown>;
 }
 

@@ -14,6 +14,7 @@ interface RadioItemProps extends BaseCompProps<HTMLLabelElement> {
   radioInfo: RadioInfo;
   name?: string;
   isActive?: boolean;
+  required?: boolean;
 }
 
 interface RadioItemHandlerProps {
@@ -24,13 +25,14 @@ function RadioItem(props: RadioItemProps & RadioItemHandlerProps) {
   const {
     radioInfo: { value, icon, label, onClick: customClick },
     name,
+    required,
     isActive,
     onClick,
     ...otherProps
   } = props;
   return (
     <label onClick={() => (customClick || onClick)?.(value)} {...otherProps}>
-      <input type="radio" name={name} value={value} un-hidden="~" />
+      <input type="radio" name={name} value={value} un-hidden="~" required={required} />
       <CircleIcon icon={icon} text={label} isActive={isActive} />
     </label>
   );
@@ -40,6 +42,7 @@ interface GridCircleRadioBoxProps extends BaseCompProps<HTMLDivElement> {
   name?: string;
   radioList: RadioInfo[];
   colNum?: number;
+  required?: boolean;
 }
 
 interface GridCircleRadioBoxhandlerProps {
@@ -51,14 +54,15 @@ const GrdiWrapper = styled.div<{ $colNum?: number }>`
 `;
 
 export function GridCircleRadioBox(props: GridCircleRadioBoxProps & GridCircleRadioBoxhandlerProps) {
-  const { name, radioList, colNum, onChange, ...otherProps } = props;
+  const { name, radioList, colNum, required, onChange, ...otherProps } = props;
   const [curValue, setCurValue] = useState('');
 
   return (
-    <GrdiWrapper un-grid="~ place-items-center" $colNum={colNum} {...otherProps}>
+    <GrdiWrapper un-grid="~ place-items-center" un-m="t-[-1em]" $colNum={colNum} {...otherProps}>
       {radioList.map((item) => (
         <RadioItem
           key={item.value}
+          required={required}
           radioInfo={item}
           name={name}
           isActive={curValue === item.value}

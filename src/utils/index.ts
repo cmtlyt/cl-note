@@ -75,3 +75,20 @@ export function selectComp(
     return value === contition;
   }) || null) as ReactNode;
 }
+
+export function getDataFromForm<K extends string>($form: HTMLFormElement, keys: K[]) {
+  const data: Record<K, any> = {} as any;
+  keys.forEach((key) => {
+    const input = $form[key];
+    if (input) data[key] = input.value;
+  });
+  return data;
+}
+
+export function getDataFromFormData(formData: FormData) {
+  const data: Record<string, any> = {};
+  for (const [key, value] of formData.entries()) {
+    data[key] = value;
+  }
+  return data;
+}
