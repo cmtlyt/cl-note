@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { BillItem } from './handler';
+import { BillItem, BillListResponse } from './handler';
 
 interface Response<D> {
   data: {
@@ -13,4 +13,6 @@ interface SplitPageParams {
   pageSize: number;
 }
 
-export type GetBillList = (params: SplitPageParams) => Promise<Response<{ bills: BillItem[] }>>;
+export type GetBillList = (params: SplitPageParams) => Promise<Response<BillListResponse>>;
+
+export type CreateBill = (params: BillItem) => Promise<Response<{ bill: BillItem }>>;

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Context, HandlerFunc } from '../types/handler';
+import { Context, HandlerFunc } from '../handler';
 
 import { checkPermission } from './permission';
 

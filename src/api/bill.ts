@@ -1,10 +1,7 @@
 import { http } from './request';
 
-interface GetBillListQuery {
-  current: number;
-  pageSize: number;
-}
+import { GetBillList } from '@/types/api';
 
-export function getBillList(query: GetBillListQuery) {
+export const getBillList: GetBillList = (query) => {
   return http.get('/bill/list', { params: query });
-}
+};

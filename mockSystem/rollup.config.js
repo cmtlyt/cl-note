@@ -19,7 +19,7 @@ export default defineConfig({
       targets: [
         { src: 'dist/mock-system.js', dest: '../public' },
         { src: 'staticFile/*', dest: '../public' },
-        { src: 'dist/types/api.d.ts', dest: '../src/types' },
+        { src: 'dist/types/*', dest: '../src/types' },
       ],
     }),
     resolve(),

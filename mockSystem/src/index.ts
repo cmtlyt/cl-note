@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { initSchema } from './schema';
 import { initStorage } from './utils/storage';
-import { Context, HandlerFunc } from './types/handler';
+import { Context, HandlerFunc } from './handler';
 import { mockHandler } from './handler';
 
 function getHandlerFormController(controller: string, cur: any = mockHandler): HandlerFunc | undefined {

@@ -1,9 +1,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { formatDto } from './schema';
-import { BillItem, BillListResponse, Context } from './types/handler';
+import { BillItem, BillListResponse } from './types/handler';
 import { getTokens, randomString, verifyToken } from './utils';
 import { checkAuthentication } from './utils/middleware';
 import { storage } from './utils/storage';
+
+export interface Context<D = any, Q = any> {
+  uri: URL;
+  request: Request;
+  data: D;
+  query: Q;
+  headers: Record<string, any>;
+  $__call: (controller: string, ctx: Context) => Promise<any>;
+}
+
+export type HandlerFunc<R = any> = (ctx: Context) => Promise<R>;
 
 export const mockHandler = {
   post: {
@@ -43,9 +54,9 @@ export const mockHandler = {
       await storage.remove('session', sessionInfo);
       return { success: true };
     },
-    createBill: checkAuthentication<any, BillItem>(async ({ data, tokenData }) => {
+    createBill: checkAuthentication<BillItem, BillItem>(async ({ data, tokenData }) => {
       const bill = await storage.insert('bill', { ...data, date: new Date(data.date), userId: tokenData.id });
-      return { success: true, data: { billId: bill.id } };
+      return { success: true, data: { bill: formatDto('bill', bill, tokenData.permission) } };
     }),
   },
   get: {
