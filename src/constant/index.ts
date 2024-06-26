@@ -1,3 +1,8 @@
+// @ts-expect-error js file
+import FingerPrint from 'fingerprintjs';
+
+export const FINGERPRINT = new FingerPrint().get();
+
 export const REFRESH_PATH = '/api/refresh';
 
 export const ACCESS_TOKEN_KEY = '__accessToken';

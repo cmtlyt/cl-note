@@ -73,18 +73,18 @@ async function findById<T extends SchemaNames>(key: T, id: string): Promise<Sche
   return data[id];
 }
 
-interface FindOptions {
+interface FindOptions<T> {
   id?: string;
-  matcher?: (item: any) => boolean;
+  matcher?: (item: T) => boolean;
 }
 
-async function find<T extends SchemaNames>(key: T, options?: FindOptions): Promise<SchemaData<T>[]> {
+async function find<T extends SchemaNames>(key: T, options?: FindOptions<SchemaData<T>>): Promise<SchemaData<T>[]> {
   const { id, matcher = (item: any) => item.id === id } = options || {};
   const data = await getData(key);
   const result: any[] = [];
   for (const key in data) {
     const item = data[key];
-    if (matcher(item)) result.push(item);
+    if (matcher(item as any)) result.push(item);
   }
   return result;
 }

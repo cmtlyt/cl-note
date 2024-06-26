@@ -1,6 +1,6 @@
 import axios, { AxiosError } from 'axios';
 
-import { ACCESS_TOKEN_KEY, API_BASE_URL, REFRESH_PATH, REFRESH_TOKEN_KEY } from '@/constant';
+import { ACCESS_TOKEN_KEY, API_BASE_URL, REFRESH_PATH, REFRESH_TOKEN_KEY, FINGERPRINT } from '@/constant';
 
 const instance = axios.create({ baseURL: API_BASE_URL, headers: { useMock: true } });
 
@@ -11,7 +11,8 @@ instance.interceptors.request.use(
     console.debug('请求URL:', config.url);
     console.debug('请求参数:', config.params);
     console.debug('请求头:', config.headers);
-    config.headers.Authorization = 'Bearer ' + localStorage.getItem(ACCESS_TOKEN_KEY);
+    config.headers.fingerprint = FINGERPRINT;
+    config.headers.Authorization = 'Bearer ' + (localStorage.getItem(ACCESS_TOKEN_KEY) || '');
     return config;
   },
   (error) => {

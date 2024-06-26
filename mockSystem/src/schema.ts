@@ -81,6 +81,7 @@ interface FieldConfig {
   verify?: (value: any) => boolean;
   autoUpdate?: boolean;
   permission?: number;
+  dtoTransform?: (value: any) => any;
 }
 
 const idField = { type: 'string', default: () => randomString(16) };
@@ -98,8 +99,9 @@ const updateTimeField = {
   type: 'date',
   default: () => new Date(),
   permission: formatPermission(DB_SHOW_HIDDEN_FIELD),
+  dtoTransform: (value: any) => value.toString(),
 };
-const createTimeField = { type: 'date', default: () => new Date() };
+const createTimeField = { type: 'date', default: () => new Date(), dtoTransForm: (value: any) => value.toString() };
 const schemaTimeField = { createTime: createTimeField, updateTime: updateTimeField };
 
 const dbSchema: Record<keyof DBScheam, Record<any, FieldConfig>> = {
@@ -203,7 +205,11 @@ export function verifySchema<K extends SchemaNames>(
   return [true, undefined, newData as any];
 }
 
-export function formatDto<K extends SchemaNames>(schemaId: K, data: SchemaData<K>, userPermission: number) {
+export function formatDto<K extends SchemaNames>(
+  schemaId: K,
+  data: SchemaData<K>,
+  userPermission: number,
+): SchemaData<K> {
   const schema = dbSchema[schemaId];
   if (!schema) return data;
   const newData: Record<string, any> = { ...data };
@@ -211,6 +217,7 @@ export function formatDto<K extends SchemaNames>(schemaId: K, data: SchemaData<K
     const _key: any = schema.alias || key;
     if (!checkPermission(userPermission, schema[key].permission)) delete newData[key as any];
     else if (!newData[_key]) newData[_key] = getTypeDefaultValue(schema[key].type);
+    if (schema[key].dtoTransform) newData[_key] = schema[key].dtoTransform(newData[_key]);
   }
-  return newData;
+  return newData as any;
 }

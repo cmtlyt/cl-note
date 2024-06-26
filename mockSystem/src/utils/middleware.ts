@@ -1,24 +1,26 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Context, HandlerFunc } from '../handler';
+import { Context, HandlerFunc } from '../types/handler';
 
 import { checkPermission } from './permission';
 
 import { verifyToken } from '.';
 
-export function checkAuthentication<D = any>(
-  callback: (ctx: Context<D> & { tokenData: any }) => Promise<any>,
+export function checkAuthentication<R = any, D = any, Q = any>(
+  callback: (
+    ctx: Context<D, Q> & { tokenData: any },
+  ) => Promise<({ success: boolean } & R) | { __format?: boolean; status?: number; data: any }>,
   readFingerprint = false,
 ) {
   return async (props: any) => {
     const { headers } = props;
     const authorization = headers.authorization;
-    if (!authorization?.startsWith('Bearer')) {
+    const token = authorization?.split(' ')[1];
+    if (!token) {
       if (!readFingerprint) return { __format: true, status: 401, data: { message: '未授权' } };
       const id = headers.fingerprint;
       if (!id) return { __format: true, status: 401, data: { message: '未授权' } };
-      return callback(Object.assign(props, { id, permission: 0 }));
+      return callback(Object.assign(props, { tokenData: { id, permission: 0 } }));
     }
-    const token = authorization.split(' ')[1];
     const [verify, errorMessage, payload] = await verifyToken(token);
     if (!verify) return { __format: true, status: 401, data: { message: errorMessage } };
     if (payload.isRefresh) return { __format: true, status: 401, data: { message: 'refreshToken 无法认证' } };

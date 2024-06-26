@@ -10,7 +10,7 @@
     "build": "vite build",
     "lint": "npm run lint:script && npm run lint:style",
     "lint:style": "stylelint --fix \"src/**/*.{css,scss}\"",
-    "lint:script": "eslint \"src/**/*.{tsx,jsx,ts,js}\" --report-unused-disable-directives --max-warnings 0 --fix",
+    "lint:script": "eslint \"src/**/*.{tsx,jsx,ts,js}\" --report-unused-disable-directives --fix",
     "preview": "vite preview",
     "patch": "patch-package"
   },

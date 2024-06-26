@@ -1,6 +1,7 @@
 import { NoteList } from '@/components/NoteList';
 import { AmountStatisticsBox } from '@/components/AmountStatisticsBox';
 import { AmountList } from '@/components/AmountList';
+import { getBillList } from '@/api/bill';
 
 export default function List() {
   return (
@@ -99,4 +100,11 @@ export default function List() {
       </div>
     </div>
   );
+}
+
+export async function loader() {
+  getBillList({ current: 1, pageSize: 10 }).then((res) => {
+    console.log(res);
+  });
+  return {};
 }

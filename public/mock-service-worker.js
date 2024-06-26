@@ -1,1 +1,18 @@
-importScripts("./mock-system.js");const{initMockSystem:initMockSystem,getMockData:getMockData}=mockSystem;self.addEventListener("activate",(t=>{t.waitUntil(initMockSystem())}));const API_REG=/^\/api\/(.*)/;self.addEventListener("fetch",(t=>{const e=new URL(t.request.url),[,s]=Array.from(API_REG.exec(e.pathname)||[]);s&&t.respondWith(getMockData(s,e,t.request))}));
+/* eslint-disable no-undef */
+importScripts('./mock-system.js');
+
+const { initMockSystem, getMockData } = mockSystem;
+
+self.addEventListener('activate', (event) => {
+  event.waitUntil(initMockSystem());
+});
+
+const API_REG = /^\/api\/(.*)/;
+
+self.addEventListener('fetch', (event) => {
+  if (event.request.headers.usemock === 'true') return;
+  const uri = new URL(event.request.url);
+  const [, splitPath] = Array.from(API_REG.exec(uri.pathname) || []);
+  if (!splitPath) return;
+  event.respondWith(getMockData(splitPath, uri, event.request));
+});

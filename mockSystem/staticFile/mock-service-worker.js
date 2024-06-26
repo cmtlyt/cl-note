@@ -10,7 +10,7 @@ self.addEventListener('activate', (event) => {
 const API_REG = /^\/api\/(.*)/;
 
 self.addEventListener('fetch', (event) => {
-  if (!event.request.headers.useMock) return;
+  if (event.request.headers.usemock === 'true') return;
   const uri = new URL(event.request.url);
   const [, splitPath] = Array.from(API_REG.exec(uri.pathname) || []);
   if (!splitPath) return;
