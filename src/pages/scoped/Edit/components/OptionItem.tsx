@@ -15,7 +15,7 @@ const SvgIcon2 = styled(SvgIcon)<{ $size?: string }>`
 `;
 
 export function OptionItem(props: OptionItem) {
-  const { label, icon, size, type, onClick } = props;
+  const { label, icon = '', size, type, onClick } = props;
   return (
     <div
       onClick={() => onClick?.()}

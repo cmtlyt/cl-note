@@ -1,4 +1,5 @@
 import axios, { AxiosError } from 'axios';
+import { message } from 'antd';
 
 import { ACCESS_TOKEN_KEY, API_BASE_URL, REFRESH_PATH, REFRESH_TOKEN_KEY, FINGERPRINT } from '@/constant';
 
@@ -33,7 +34,10 @@ instance.interceptors.response.use(
     const { config, response } = error;
 
     return new Promise((resolve, _reject) => {
-      const reject = (error: AxiosError) => {
+      const reject = (error: AxiosError<Record<string, string>>) => {
+        message.error({
+          content: error.response?.data?.message || '请求失败',
+        });
         _reject([error.response?.data, error]);
       };
       if ((response.status === 401 || config.url === REFRESH_PATH) && refreshCount < 3) {

@@ -30,7 +30,7 @@ function AccountTypeSelect() {
   }, [accountTypes]);
 
   return (
-    <FieldWrapper label={`${label}方式`}>
+    <FieldWrapper label={`${label}账户`}>
       <Select
         name="accountTypeId"
         required

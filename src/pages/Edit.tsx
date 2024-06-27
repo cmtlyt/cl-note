@@ -16,6 +16,7 @@ import { getConsumeTypeList } from '@/api/consumeType';
 import { useActionDataReload } from '@/hooks/useActionDataReload';
 import { createBill } from '@/api/bill';
 import { getAccountTypeList } from '@/api/accountType';
+import { updateLayout } from '@/storage/layout';
 
 export default function Edit() {
   const formRef = useRef<HTMLFormElement>(null);
@@ -76,8 +77,14 @@ export async function loader() {
   if (!list.accountTypeList?.length) {
     queue.push(getAccountTypeList().then((res) => (newStorage.accountTypeList = res.data.accountTypes)));
   }
-  await Promise.all(queue);
+  updateLayout({ showLoading: true });
+  Promise.all(queue)
+    .then(() => {
+      Object.keys(newStorage).length && updateEditStorage(newStorage);
+    })
+    .finally(() => {
+      updateLayout({ showLoading: false });
+    });
 
-  Object.keys(newStorage).length && updateEditStorage(newStorage);
   return {};
 }

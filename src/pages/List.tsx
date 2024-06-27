@@ -6,6 +6,7 @@ import { billListAtom, updateListStorage } from './scoped/List/state';
 import { AmountStatisticsBox } from '@/components/AmountStatisticsBox';
 import { BillList } from '@/components/BillList';
 import { getBillList } from '@/api/bill';
+import { updateLayout } from '@/storage/layout';
 
 function AtomBillList() {
   const billList = useAtomValue(billListAtom);
@@ -37,8 +38,13 @@ export default function List() {
 }
 
 export async function loader() {
-  getBillList({ current: 1, pageSize: 10 }).then((res) => {
-    updateListStorage({ billList: res.data.bills });
-  });
+  updateLayout({ showLoading: true });
+  getBillList({ current: 1, pageSize: 10 })
+    .then((res) => {
+      updateListStorage({ billList: res.data.bills });
+    })
+    .finally(() => {
+      updateLayout({ showLoading: false });
+    });
   return {};
 }

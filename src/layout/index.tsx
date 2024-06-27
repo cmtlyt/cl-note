@@ -3,9 +3,10 @@ import { Outlet, useLocation, useNavigation } from 'react-router-dom';
 import styled from 'styled-components';
 import { useAtom, useSetAtom } from 'jotai';
 import { useEffect } from 'react';
+import { $ } from 'jotai-signal';
 
 import { NavBar } from '@/components/NavBar';
-import { layoutAtom, slotsInfoAtom } from '@/storage/layout';
+import { layoutAtom, showLoadingAtom, slotsInfoAtom } from '@/storage/layout';
 import { Loading } from '@/components/Loading';
 import { useSlots } from '@/hooks/useSlots';
 
@@ -35,7 +36,7 @@ export default function Layout() {
           <Box un-overflow="y-auto" un-flex="1">
             <Outlet />
           </Box>
-          <Loading delay={300} visible={navigation.state === 'loading'} un-absolute="~" />
+          <Loading delay={300} visible={$(showLoadingAtom) || navigation.state === 'loading'} un-absolute="~" />
         </div>
         <div un-relative="~">
           {slots.footer || (layoutInfo.showNavBar && <NavBar onChange={(e) => console.log(e)} />)}

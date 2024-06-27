@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { gc } from '@cmtlyt/base';
 
@@ -76,7 +76,8 @@ export function Select(props: SelectProps) {
   const slots = useSlots(children as ReactNode, ['icon']);
 
   const options = useMemo(() => {
-    return [...(placeholder ? [placeholder] : []), ...(_tempOptions || [])];
+    const list = [...(placeholder ? [placeholder] : []), ...(_tempOptions || [])];
+    return list;
   }, [_tempOptions, placeholder]);
 
   const [curOpt, setCurOpt] = useState(
@@ -86,6 +87,10 @@ export function Select(props: SelectProps) {
         label: '',
       },
   );
+
+  useEffect(() => {
+    setCurOpt(options[0] || { value: '', label: '' });
+  }, [setCurOpt, options]);
 
   const changeOpt = useCallback(
     (option: OptionProps) => {
