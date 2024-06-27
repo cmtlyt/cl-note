@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { atom, type WritableAtom } from 'jotai';
 import { produce } from 'immer';
+import { BehaviorSubject } from 'rxjs';
 
 type AtomValue<T> =
   T extends WritableAtom<infer V, any, any>
@@ -46,4 +47,17 @@ export function createImmerAtom<
       })();
     },
   );
+}
+
+export function createUpdateFunc<T extends BehaviorSubject<any>>(subject$: T) {
+  return <D extends UnwrapBehaviorSubject<T>>(data: Partial<D>) => {
+    const oldData: D = subject$.getValue();
+    subject$.next(
+      produce(oldData, (draft: any) => {
+        for (const key in data) {
+          draft[key] = data[key];
+        }
+      }),
+    );
+  };
 }

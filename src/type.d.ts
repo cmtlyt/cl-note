@@ -37,3 +37,9 @@ interface BaseUnoProps extends HTMLAttributes {
 type ReactNode = React.ReactNode;
 
 type FCProps<C extends React.FC<any>> = C extends React.FC<infer P> ? P : Record<string, any>;
+
+type UnwrapPromise<T> = T extends Promise<infer U> ? U : T;
+
+type GetLoaderType<T extends import('react-router-dom').LoaderFunction> = UnwrapPromise<ReturnType<T>>;
+
+type UnwrapBehaviorSubject<T> = T extends import('rxjs').BehaviorSubject<infer U> ? U : T;

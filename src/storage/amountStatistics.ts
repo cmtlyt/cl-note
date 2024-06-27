@@ -1,8 +1,7 @@
 import { atomWithObservable } from 'jotai/utils';
 import { BehaviorSubject } from 'rxjs';
-import { produce } from 'immer';
 
-import { createImmerAtom } from './util';
+import { createImmerAtom, createUpdateFunc } from './util';
 
 interface AmountStatisticsStorage {
   outputAmount: number;
@@ -18,17 +17,7 @@ const subject$ = new BehaviorSubject<AmountStatisticsStorage>({
   month: 0,
 });
 
-export function updateAmountStatistics(data: Partial<AmountStatisticsStorage>) {
-  const oldData = subject$.getValue();
-  subject$.next(
-    produce(oldData, (draft) => {
-      for (const key in draft) {
-        // @ts-expect-error is any
-        draft[key] = data[key];
-      }
-    }),
-  );
-}
+export const updateAmountStatistics = createUpdateFunc(subject$);
 
 export const amountStatisticsAtom = atomWithObservable(() => subject$);
 

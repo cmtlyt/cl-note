@@ -1,8 +1,9 @@
 import { gc } from '@cmtlyt/base';
 import styled, { css } from 'styled-components';
 
+import type { OptionItem } from '../constant';
+
 import { SvgIcon } from '@/components/SvgIcon';
-import type { OptionItem } from '@/constant/editPageData';
 
 const SvgIcon2 = styled(SvgIcon)<{ $size?: string }>`
   ${(props) =>

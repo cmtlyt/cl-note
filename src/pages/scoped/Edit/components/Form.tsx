@@ -1,29 +1,40 @@
 import { DatePicker } from 'antd';
 import { gc } from '@cmtlyt/base';
 import dayjs from 'dayjs';
-import { Form as RouterForm } from 'react-router-dom';
-import { forwardRef, memo } from 'react';
-import { $ } from 'jotai-signal';
+import { forwardRef, memo, useMemo } from 'react';
 import { useAtomValue } from 'jotai';
+import { Form as RouterForm } from 'react-router-dom';
+import { $ } from 'jotai-signal';
 
-import { typeAtom } from '../state';
+import { accountTypeListAtom, consumeTypeListAtom, typeAtom } from '../state';
+import { typeOptions } from '../constant';
 
 import { OptionItem } from './OptionItem';
 
 import { GridCircleRadioBox } from '@/components/GridCircleRadioBox';
 import { FieldWrapper } from '@/components/FieldWrapper';
-import { consumeList, payTypeOptions } from '@/constant/editPageData';
 import { Select } from '@/components/Select';
 
-function PayTypeSelect() {
+function AccountTypeSelect() {
   const type = useAtomValue(typeAtom);
+  const accountTypes = useAtomValue(accountTypeListAtom);
+
+  const label = typeOptions.find((item) => item.value === type)?.label || '';
+
+  const accountTypeOptions = useMemo(() => {
+    return accountTypes.map((item) => ({
+      value: item.id,
+      label: item.name,
+      icon: item.icon,
+    }));
+  }, [accountTypes]);
 
   return (
-    <FieldWrapper label={`${type}方式`}>
+    <FieldWrapper label={`${label}方式`}>
       <Select
-        name="payType"
+        name="accountTypeId"
         required
-        options={payTypeOptions}
+        options={accountTypeOptions}
         OptionComp={OptionItem}
         optionWrapperClass={gc('w-full! ml-[-1rem]')}
       >
@@ -33,14 +44,28 @@ function PayTypeSelect() {
   );
 }
 
+function ConsumeTypeSelect() {
+  const consumeTypes = useAtomValue(consumeTypeListAtom);
+
+  const radioList = useMemo(() => {
+    return consumeTypes.map((item) => ({
+      value: item.id,
+      icon: item.icon,
+      label: item.name,
+    }));
+  }, [consumeTypes]);
+
+  return <GridCircleRadioBox name="consumeTypeId" required radioList={radioList} colNum={5} />;
+}
+
 interface FormProps {}
 
 export const Form = memo(
   forwardRef<HTMLFormElement, FormProps>(function Form(_props, formRef) {
     return (
-      <RouterForm ref={formRef} method="post" un-p="x-[1rem] t-[1.5rem]">
+      <RouterForm ref={formRef} method="post" un-p="x-[1rem] y-[1.5rem]">
         <input type="hidden" name="type" value={$(typeAtom)} />
-        <GridCircleRadioBox name="consumeType" required radioList={consumeList} colNum={5} />
+        <ConsumeTypeSelect />
         <FieldWrapper label="日期">
           <DatePicker
             name="date"
@@ -49,7 +74,7 @@ export const Form = memo(
             className={gc('border-none w-full focus-within:shadow-none p-0')}
           />
         </FieldWrapper>
-        <PayTypeSelect />
+        <AccountTypeSelect />
         <FieldWrapper label="金额">
           <input type="number" required name="amount" placeholder="请输入金额" un-w="full" />
         </FieldWrapper>

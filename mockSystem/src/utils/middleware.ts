@@ -8,7 +8,7 @@ import { verifyToken } from '.';
 export function checkAuthentication<R = any, D = any, Q = any>(
   callback: (
     ctx: Context<D, Q> & { tokenData: any },
-  ) => Promise<({ success: boolean } & R) | { __format?: boolean; status?: number; data: any }>,
+  ) => Promise<({ success: boolean } & R) | { __format?: boolean; status?: number; data?: any }>,
   readFingerprint = false,
 ) {
   return async (props: any) => {

@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { getArray } from '@cmtlyt/base';
+
 import { SchemaData, SchemaInputData, SchemaNames, verifySchema } from '../schema';
 
 import { CACHE_NAME, ORIGIN } from './constant';
@@ -60,8 +62,7 @@ async function init<K extends SchemaNames>(key: K, value: SchemaInputData<K>) {
       newData = Object.assign({}, value);
       data.forEach((item: any) => (newData[item.id] = item));
     } else {
-      // @ts-expect-error value is array
-      newData = [...value, ...Object.keys(data).map((item) => data[item])];
+      newData = [...(value as unknown as any[]), ...Object.keys(data).map((item) => data[item])];
     }
     return cache!.put(urlId, createCacheData(newData));
   });
@@ -75,38 +76,60 @@ async function findById<T extends SchemaNames>(key: T, id: string): Promise<Sche
 
 interface FindOptions<T> {
   id?: string;
+  all?: boolean;
+  limit?: number;
+  skip?: number;
   matcher?: (item: T) => boolean;
 }
 
 async function find<T extends SchemaNames>(key: T, options?: FindOptions<SchemaData<T>>): Promise<SchemaData<T>[]> {
-  const { id, matcher = (item: any) => item.id === id } = options || {};
+  const { id, matcher = (item: any) => item.id === id, all, limit, skip } = options || {};
   const data = await getData(key);
   const result: any[] = [];
   for (const key in data) {
     const item = data[key];
-    if (matcher(item as any)) result.push(item);
+    if (all || matcher(item as any)) result.push(item);
   }
+  const sortResult = result.sort((a, b) => a.createDate - b.createDate);
+  if (skip) sortResult.splice(0, skip);
+  if (limit) sortResult.splice(limit);
+  return sortResult;
+}
+
+async function insert<T extends SchemaNames>(
+  key: T,
+  value: SchemaInputData<T> | SchemaInputData<T>[],
+): Promise<SchemaData<T>[]> {
+  const data: Record<string, any> = (await getData(key)) || {};
+  const sources = getArray(value);
+  const result: any[] = [];
+  sources.forEach((item) => {
+    const [verify, error, _data] = verifySchema(key, item);
+    if (!verify) throw new Error(error || undefined);
+    data[_data!.id] = _data;
+    result.push(_data);
+  });
+  await cache!.put(getUrlId(key), createCacheData(data));
   return result;
 }
 
-async function insert<T extends SchemaNames>(key: T, value: SchemaInputData<T>): Promise<SchemaData<T>> {
+async function update<T extends SchemaNames>(
+  key: T,
+  value: SchemaInputData<T> | SchemaInputData<T>[],
+): Promise<SchemaData<T>[]> {
   const data: Record<string, any> = (await getData(key)) || {};
-  const [verify, error, _data] = verifySchema(key, value);
-  if (!verify) throw new Error(error || undefined);
-  data[_data!.id] = _data;
+  const sources = getArray(value);
+  const result: any[] = [];
+  sources.forEach((item) => {
+    const id = item.id;
+    if (!id || !(id in data)) return insert(key, value);
+    const [verify, error, _data] = verifySchema(key, value);
+    if (!verify) throw new Error(error);
+    data[id] = Object.assign(data[id], _data);
+    result.push(data[id]);
+  });
   await cache!.put(getUrlId(key), createCacheData(data));
-  return _data!;
-}
-
-async function update<T extends SchemaNames>(key: T, value: SchemaInputData<T>): Promise<SchemaData<T>> {
-  const data: Record<string, any> = (await getData(key)) || {};
-  const id = value.id;
-  if (!id || !(id in data)) return insert(key, value);
-  const [verify, error, _data] = verifySchema(key, value);
-  if (!verify) throw new Error(error);
-  data[id] = Object.assign(data[id], _data);
-  await cache!.put(getUrlId(key), createCacheData(data));
-  return _data!;
+  return result;
 }
 
 async function remove<T extends SchemaNames>(key: T, value: { id: string }) {

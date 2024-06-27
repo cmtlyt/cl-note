@@ -39,7 +39,7 @@ interface SelectProps extends Omit<BaseCompProps<HTMLDivElement>, 'children' | '
   placement?: 'topleft' | 'topright' | 'topcenter' | 'bottomleft' | 'bottomright' | 'bottomcenter';
   required?: boolean;
 
-  onChange?: (value: string) => void;
+  onChange?: (value: OptionProps) => void;
 }
 
 const OptionWrapper = styled(Card)<{ $count: number }>`
@@ -90,7 +90,7 @@ export function Select(props: SelectProps) {
   const changeOpt = useCallback(
     (option: OptionProps) => {
       setCurOpt(option);
-      onChange?.(option.value);
+      onChange?.(option);
     },
     [onChange],
   );

@@ -3,6 +3,7 @@ import { initSchema } from './schema';
 import { initStorage } from './utils/storage';
 import { Context, HandlerFunc } from './handler';
 import { mockHandler } from './handler';
+import { initSchemaData } from './utils/init';
 
 function getHandlerFormController(controller: string, cur: any = mockHandler): HandlerFunc | undefined {
   if (controller in cur) return cur[controller];
@@ -74,6 +75,7 @@ export async function getMockData(splitPath: string, uri: URL, request: Request)
 export async function initMockSystem() {
   await initStorage();
   await initSchema();
+  await initSchemaData();
 }
 
 export default { getMockData, initMockSystem };

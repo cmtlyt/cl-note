@@ -7,7 +7,14 @@ import { Amount } from './Amount';
 import { Select } from './Select';
 import { SvgIcon } from './SvgIcon';
 
-import { inputAmountAtom, monthAtom, outputAmountAtom, yearAtom } from '@/storage/amountStatistics';
+import {
+  inputAmountAtom,
+  monthAtom,
+  outputAmountAtom,
+  updateAmountStatistics,
+  yearAtom,
+} from '@/storage/amountStatistics';
+import { getBillStatistics } from '@/api/billStatistics';
 
 const StatisticsWrapper = styled.div`
   box-shadow: 0.2rem 0.2rem 1rem -0.8rem var(--shadow-color);
@@ -72,6 +79,8 @@ function Filter() {
 }
 
 export function AmountStatisticsBox() {
+  updateStatistics();
+
   return (
     <StatisticsWrapper un-flex="~ items-end" un-bg="white" un-p="x-[2rem] y-[2rem]" un-m="b-[1rem]">
       <Filter />
@@ -95,4 +104,17 @@ export function AmountStatisticsBox() {
       </StatGroup>
     </StatisticsWrapper>
   );
+}
+
+// eslint-disable-next-line react-refresh/only-export-components
+export function updateStatistics() {
+  getBillStatistics().then((res) => {
+    const {
+      billStatistics: { pay, income },
+    } = res.data;
+    updateAmountStatistics({
+      inputAmount: income,
+      outputAmount: pay,
+    });
+  });
 }

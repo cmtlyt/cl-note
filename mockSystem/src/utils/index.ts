@@ -13,6 +13,10 @@ export function randomString(len = 16, pre = ''): string {
   return str + randomString(len - str.length, str);
 }
 
+export function randomId(len = 16): string {
+  return `${Date.now().toString(36)}${randomString(len)}`;
+}
+
 type TokenType = 'access' | 'refresh';
 
 export function getSecret(type: TokenType): string {
