@@ -1,0 +1,1 @@
+System.register(["./index-legacy-Bc37_PvB.js","./react-vendor-legacy-DNItiIbr.js","./__commonjsHelpers__-legacy-CTU2Tar8.js"],(function(e,n){"use strict";var t;return{setters:[function(e){t=e.a},null,null],execute:function(){e("default",(function(){return t("div",{children:"User"})}))}}}));

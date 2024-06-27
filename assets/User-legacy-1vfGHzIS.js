@@ -1,1 +1,0 @@
-System.register(["./index-legacy-nF1d05rm.js","./react-vendor-legacy-Be0xoM0S.js","./__commonjsHelpers__-legacy-CTU2Tar8.js"],(function(e,n){"use strict";var t;return{setters:[function(e){t=e.a},null,null],execute:function(){e("default",(function(){return t("div",{children:"User"})}))}}}));
