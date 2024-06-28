@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="80" height="80"
+  style="font-size: 128px;">
+  <title>公章</title>
+
+  <g>
+    <desc>圆形边框和中间红星</desc>
+    <circle stroke-width="20" cy="512" cx="512" r="502" fill="none" stroke="#f00" />
+    <path
+      stroke="none"
+      fill="#f00"
+      transform="translate(-256, -256) scale(1.5)"
+      d="M398.84211,486.62291l86.44555,0l26.71234,-82.12292l26.71235,82.12292l86.44553,0l-69.93579,50.75417l26.71372,82.12292l-69.93582,-50.75556l-69.9358,50.75556l26.71373,-82.12292l-69.93581,-50.75417z"
+    />
+  </g>
+
+  <defs>
+    <desc>文本的路径</desc>
+    <path id="path-top" stroke-width="10" stroke="#f00" fill="none"
+      d="M212,690 a350,350 0 1,1 600,0" />
+    <path id="path-bottom" stroke-width="10" stroke="#f00" fill="none"
+      d="M112,700 a450,450 0 0,0 800,0" />
+    <path id="path-middle" stroke-width="10" stroke="#f00" d="M300,770 L724,770" />
+  </defs>
+
+  <g fill="#f00">
+    <desc>文本区域</desc>
+
+    <text font-size="1em">
+      <desc>上面的大弧形文本(desc里的文本可以设置的和下面textPath的文本一样)</desc>
+      <textPath href="#path-top" startOffset="50%" text-anchor="middle">
+        测试文本测试文本测试文本测试文本
+      </textPath>
+    </text>
+
+    <text font-size="0.75em" style="letter-spacing: 16px">
+      <desc>下面的小弧形文本</desc>
+      <textPath href="#path-bottom" startOffset="50%" text-anchor="middle">
+        测试文本
+      </textPath>
+    </text>
+
+    <text font-size="0.5em">
+      <desc>中间的文本</desc>
+      <textPath href="#path-middle" startOffset="50%" text-anchor="middle">
+        测试文本
+      </textPath>
+    </text>
+  </g>
+</svg>
