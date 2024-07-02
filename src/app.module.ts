@@ -11,25 +11,41 @@ import { OrganizationModule } from './modules/system/organization/organization.m
 import { PermissionModule } from './modules/system/permission/permission.module';
 import { RoleModule } from './modules/system/role/role.module';
 import { LoggerModule } from '@lib/logger';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import config from '@common/config';
+import { createClient } from 'redis';
+
+export const REDIS_CLIENT_TOKEN = 'REDIS_CLIENT';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      load: [...config()],
+    }),
     LoggerModule.forRoot(),
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: 'localhost',
-      port: 3306,
-      username: 'root',
-      password: '00000000',
-      database: 'cl_note',
-      entities: [Organization, User, Permission, Role],
-      synchronize: true,
-      logging: true,
-      poolSize: 5,
-      connectorPackage: 'mysql2',
-      extra: {
-        authPlugin: 'sha256_password',
+    TypeOrmModule.forRootAsync({
+      async useFactory(configService: ConfigService) {
+        const dbConfig = configService.get('db.mysql');
+
+        return {
+          type: 'mysql',
+          host: dbConfig.host,
+          port: dbConfig.port,
+          username: dbConfig.user,
+          password: dbConfig.password,
+          database: dbConfig.database,
+          entities: [Organization, User, Permission, Role],
+          synchronize: dbConfig.synchronize,
+          logging: dbConfig.logging,
+          poolSize: dbConfig.poolSize,
+          connectorPackage: 'mysql2',
+          extra: {
+            authPlugin: 'sha256_password',
+          },
+        };
       },
+      inject: [ConfigService],
     }),
     UserModule,
     OrganizationModule,
@@ -37,6 +53,25 @@ import { LoggerModule } from '@lib/logger';
     RoleModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: REDIS_CLIENT_TOKEN,
+      async useFactory(configService: ConfigService) {
+        const dbConfig = configService.get('db.redis');
+
+        const client = createClient({
+          socket: {
+            host: dbConfig.host,
+            port: dbConfig.port,
+          },
+        });
+        await client.connect();
+
+        return client;
+      },
+      inject: [ConfigService],
+    },
+  ],
 })
 export class AppModule {}
