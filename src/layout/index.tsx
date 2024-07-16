@@ -42,6 +42,9 @@ export default function Layout() {
           {slots.footer || (layoutInfo.showNavBar && <NavBar onChange={(e) => console.log(e)} />)}
         </div>
       </Flex>
+      <section un-fixed="~" un-size="0" un-top="0" un-left="0">
+        {slots.fixed}
+      </section>
     </>
   );
 }
@@ -56,7 +59,7 @@ export function Delivery(props: DeliveryProps) {
   const setSlotsInfo = useSetAtom(slotsInfoAtom);
   const location = useLocation();
 
-  const slots = useSlots(children);
+  const slots = useSlots(children, ['header', 'fixed', 'footer']);
 
   useEffect(() => {
     setSlotsInfo({ path: location.pathname, slots });

@@ -3,10 +3,17 @@ import { BehaviorSubject } from 'rxjs';
 
 import { createImmerAtom, createUpdateFunc } from './util';
 
+interface Slots {
+  header?: ReactNode;
+  footer?: ReactNode;
+  fixed?: ReactNode;
+  default?: ReactNode;
+}
+
 interface LayoutStorage {
   showLoading: boolean;
   showNavBar: boolean;
-  slotsInfo: { path: string; slots: Record<string, ReactNode> };
+  slotsInfo: { path: string; slots: Slots };
 }
 
 const subject$ = new BehaviorSubject<LayoutStorage>({
