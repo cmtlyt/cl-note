@@ -12,22 +12,13 @@ export function CarPlate(props: CarPlateProps) {
 
   let maxLabelLength = 0;
 
-  // const labelSpan = Array.from(label || '').map((char, index) => {
-  //   return <span key={index}>{char}</span>;
-  // });
-
-  const dataToList = data.map((item, index) => {
+  data.forEach((item) => {
     maxLabelLength = Math.max(maxLabelLength, item.label.length);
-    return <span key={index}>item</span>;
   });
-  console.log(dataToList);
-
-  // const spanWidth = labelSpan.length;
-
   const listDom = data.map((item, index) => {
     return (
       <div className="rounded mt-3" key={index}>
-        <div className="text-justify text-last-justify inline-block label" style={{ width: `${maxLabelLength}em` }}>
+        <div className="text-justify text-last-justify inline-block" style={{ width: `${maxLabelLength}em` }}>
           {item.label}
         </div>
         <span>{item.space || ':'}</span>
