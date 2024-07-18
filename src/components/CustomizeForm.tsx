@@ -1,13 +1,13 @@
-interface CarPlateRowData {
+interface CustomizeFormRowData {
   label: string;
   space?: string;
   value: string;
 }
-interface CarPlateProps extends BaseCompProps<HTMLDivElement> {
-  data: CarPlateRowData[];
+interface CustomizeFormProps extends BaseCompProps<HTMLDivElement> {
+  data: CustomizeFormRowData[];
 }
 
-export function CarPlate(props: CarPlateProps) {
+export function CustomizeForm(props: CustomizeFormProps) {
   const { data, ...otherProps } = props;
 
   let maxLabelLength = 0;

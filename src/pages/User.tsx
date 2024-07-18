@@ -1,5 +1,5 @@
 import { OfficialSeal } from '@/components/OfficialSeal';
-import { CarPlate } from '@/components/CarPlate';
+import { CustomizeForm } from '@/components/CustomizeForm';
 
 export default function User() {
   const testData = {
@@ -30,7 +30,7 @@ export default function User() {
         middleText="测试文本测试文"
         un-size="[96px]"
       />
-      <CarPlate data={testData.CarPlate} />
+      <CustomizeForm data={testData.CarPlate} />
     </div>
   );
 }
