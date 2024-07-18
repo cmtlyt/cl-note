@@ -1,4 +1,5 @@
 import { OfficialSeal } from '@/components/OfficialSeal';
+import { CarPlate } from '@/components/CarPlate';
 
 export default function User() {
   return (
@@ -10,6 +11,7 @@ export default function User() {
         middleText="测试文本测试文"
         un-size="[96px]"
       />
+      <CarPlate label="车主姓名" space="：" value="陈哲哲" />
     </div>
   );
 }
