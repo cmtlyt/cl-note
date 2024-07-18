@@ -1,32 +1,40 @@
-interface CarPlateProps extends BaseCompProps<HTMLDivElement> {
+interface CarPlateRowData {
   label: string;
-  space: string;
+  space?: string;
   value: string;
+}
+interface CarPlateProps extends BaseCompProps<HTMLDivElement> {
+  data: CarPlateRowData[];
 }
 
 export function CarPlate(props: CarPlateProps) {
-  const { label, space, value, ...otherProps } = props;
+  const { data, ...otherProps } = props;
 
-  const labelSpan = Array.from(label || '').map((char, index) => {
-    return <span key={index}>{char}</span>;
+  let maxLabelLength = 0;
+
+  // const labelSpan = Array.from(label || '').map((char, index) => {
+  //   return <span key={index}>{char}</span>;
+  // });
+
+  const dataToList = data.map((item, index) => {
+    maxLabelLength = Math.max(maxLabelLength, item.label.length);
+    return <span key={index}>item</span>;
+  });
+  console.log(dataToList);
+
+  // const spanWidth = labelSpan.length;
+
+  const listDom = data.map((item, index) => {
+    return (
+      <div className="rounded mt-3" key={index}>
+        <div className="text-justify text-last-justify inline-block label" style={{ width: `${maxLabelLength}em` }}>
+          {item.label}
+        </div>
+        <span>{item.space || ':'}</span>
+        <span className="w-auto">{item.value}</span>
+      </div>
+    );
   });
 
-  const spanWidth = labelSpan.length;
-
-  return (
-    <div {...otherProps}>
-      <div className=" rounded mt-3">
-        <div className="text-justify text-last-justify inline-block label" style={{ width: `${spanWidth}em` }}>
-          {labelSpan}
-        </div>
-        <span>{space}</span>
-        <span className="w-auto">{value}</span>
-      </div>
-      <div className=" rounded mt-3">
-        <span className="w-auto">车主姓名</span>
-        <span>：</span>
-        <span className="w-auto">陈哲哲</span>
-      </div>
-    </div>
-  );
+  return <div {...otherProps}>{listDom}</div>;
 }
