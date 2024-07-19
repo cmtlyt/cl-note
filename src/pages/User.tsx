@@ -16,7 +16,7 @@ export default function User() {
       },
       {
         label: '关系',
-        space: '?',
+        space: '',
         value: '父子',
       },
     ],

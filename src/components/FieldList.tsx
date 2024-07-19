@@ -21,7 +21,7 @@ export function FieldList(props: FieldListProps) {
         <div className="text-justify text-last-justify inline-block" style={{ width: `${maxLabelLength}em` }}>
           {item.label}
         </div>
-        <span>{item.space || ':'}</span>
+        <span>{item.space ?? ':'}</span>
         <span className="w-auto">{item.value}</span>
       </div>
     );
