@@ -1,13 +1,13 @@
-interface CustomizeFormRowData {
+interface FieldListRowData {
   label: string;
   space?: string;
   value: string;
 }
-interface CustomizeFormProps extends BaseCompProps<HTMLDivElement> {
-  data: CustomizeFormRowData[];
+interface FieldListProps extends BaseCompProps<HTMLDivElement> {
+  data: FieldListRowData[];
 }
 
-export function CustomizeForm(props: CustomizeFormProps) {
+export function FieldList(props: FieldListProps) {
   const { data, ...otherProps } = props;
 
   let maxLabelLength = 0;
