@@ -1,3 +1,5 @@
+import { AlignText } from './AlignText';
+
 interface FieldListRowData {
   label: string;
   space?: string;
@@ -26,9 +28,7 @@ export function FieldList(props: FieldListProps) {
   const listDom = data.map((item, index) => {
     return (
       <div className="rounded mt-3" key={index}>
-        <div className="text-justify text-last-justify inline-block" style={{ width }}>
-          {item.label}
-        </div>
+        <AlignText text={item.label} width={width} />
         <span>{item.space ?? ':'}</span>
         <span className="w-auto">{item.value}</span>
       </div>
