@@ -30,7 +30,7 @@ export default function User() {
         middleText="测试文本测试文"
         un-size="[96px]"
       />
-      <FieldList data={testData.CarPlate} />
+      <FieldList data={testData.CarPlate} width="100px" />
     </div>
   );
 }
