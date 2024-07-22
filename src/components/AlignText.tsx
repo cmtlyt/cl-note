@@ -1,7 +1,7 @@
 interface AlignTextProps extends BaseCompProps<HTMLDivElement> {
   text: string;
   align?: 'center' | 'left' | 'right' | 'justify';
-  width?: string;
+  width?: string | number;
 }
 
 export function AlignText(props: AlignTextProps) {
