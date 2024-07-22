@@ -1,3 +1,5 @@
+import { generateClassName } from '@cmtlyt/base';
+
 interface AlignTextProps extends BaseCompProps<HTMLDivElement> {
   text: string;
   align?: 'center' | 'left' | 'right' | 'justify';
@@ -11,8 +13,10 @@ export function AlignText(props: AlignTextProps) {
   if (newAlign === 'justify') {
     textClassName += ' text-last-justify';
   }
+
+  const className = generateClassName(textClassName, 'inline-block');
   return (
-    <div {...otherProps} className={`${textClassName}  inline-block`} style={{ width }}>
+    <div {...otherProps} className={className} style={{ width }}>
       {text}
     </div>
   );
