@@ -24,7 +24,6 @@ export function FieldList(props: FieldListProps) {
     });
     maxLabelLength = `${maxLabelLength}em`;
   }
-  console.log('maxLabelLength:', maxLabelLength, width);
 
   const listDom = data.map((item, index) => {
     return (
