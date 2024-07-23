@@ -1,0 +1,41 @@
+import { AlignText } from './AlignText';
+
+interface FieldListRowData {
+  label: string;
+  space?: string;
+  value: string;
+}
+interface FieldListProps extends BaseCompProps<HTMLDivElement> {
+  data: FieldListRowData[];
+  width?: string;
+}
+
+export function FieldList(props: FieldListProps) {
+  const { data, ...otherProps } = props;
+  let { width } = props;
+  let maxLabelLength = width || 0;
+  if (!width?.endsWith('px')) {
+    width = `${width}em`;
+  }
+
+  if (maxLabelLength === 0) {
+    data.forEach((item) => {
+      maxLabelLength = Math.max(+maxLabelLength, item.label.length);
+    });
+    maxLabelLength = `${maxLabelLength}em`;
+  }
+
+  return (
+    <div {...otherProps}>
+      {data.map((item, index) => {
+        return (
+          <div className="rounded mt-3" key={index}>
+            <AlignText text={item.label} width={maxLabelLength as string} />
+            <span>{item.space ?? ':'}</span>
+            <span className="w-auto">{item.value}</span>
+          </div>
+        );
+      })}
+    </div>
+  );
+}

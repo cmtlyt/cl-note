@@ -47,6 +47,7 @@ const custonPresets: Preset[] = [
           },
         ],
       ],
+      ['text-last-justify', { 'text-align-last': 'justify' }],
     ],
   },
 ];
