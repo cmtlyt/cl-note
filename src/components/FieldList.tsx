@@ -25,15 +25,17 @@ export function FieldList(props: FieldListProps) {
     maxLabelLength = `${maxLabelLength}em`;
   }
 
-  const listDom = data.map((item, index) => {
-    return (
-      <div className="rounded mt-3" key={index}>
-        <AlignText text={item.label} width={maxLabelLength} />
-        <span>{item.space ?? ':'}</span>
-        <span className="w-auto">{item.value}</span>
-      </div>
-    );
-  });
-
-  return <div {...otherProps}>{listDom}</div>;
+  return (
+    <div {...otherProps}>
+      {data.map((item, index) => {
+        return (
+          <div className="rounded mt-3" key={index}>
+            <AlignText text={item.label} width={maxLabelLength as string} />
+            <span>{item.space ?? ':'}</span>
+            <span className="w-auto">{item.value}</span>
+          </div>
+        );
+      })}
+    </div>
+  );
 }
